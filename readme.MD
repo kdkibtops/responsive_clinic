@@ -1,5 +1,5 @@
-#WEB BASED RESPONSIVE CLINIC APPLICATION:
-##Under development....
+# WEB BASED RESPONSIVE CLINIC APPLICATION:
+## Under development....
 
 The idea is creating a fully responsive web based application for managing clinic and patients data
 The HTML and CSS codes used so far are used from youtube video for creating fully responsive web page to be compatible with all devices.
