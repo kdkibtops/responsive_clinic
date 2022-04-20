@@ -1,19 +1,23 @@
 {
-  "name": "eclinic",
-  "version": "1.0.0",
-  "description": "A fully responsive e-clinic web based application for managing all related patients and clinic data",
-  "main": "./server/server.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+ssh://git@github.com/kdkibtops/responsive_clinic.git"
-  },
-  "author": "Mustafa Heidar",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/kdkibtops/responsive_clinic/issues"
-  },
-  "homepage": "https://github.com/kdkibtops/responsive_clinic#readme"
+    "name": "eclinic",
+    "version": "1.0.0",
+    "description": "A fully responsive e-clinic web based application for managing all related patients and clinic data",
+    "main": "./server/server.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+ssh://git@github.com/kdkibtops/responsive_clinic.git"
+    },
+    "author": "Mustafa Heidar",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/kdkibtops/responsive_clinic/issues"
+    },
+    "homepage": "https://github.com/kdkibtops/responsive_clinic#readme",
+    "devDependencies": {
+        "@types/node": "^17.0.25",
+        "typescript": "^4.6.3"
+    }
 }
