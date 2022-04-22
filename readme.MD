@@ -17,3 +17,6 @@ I am intending to use:
 #### -- Database:
 #### -- Server:
 #### -- API:
+- Models:
+
+- Handlers:
