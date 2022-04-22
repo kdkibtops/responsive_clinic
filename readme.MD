@@ -14,9 +14,11 @@ I am intending to use:
 ### Front end:
 
 ### Server:
-#### -- Database:
-#### -- Server:
-#### -- API:
+#### Database:
+#### Server:
+#### API:
 - Models:
+- - Users:
+- - Clinics:
 
 - Handlers:
