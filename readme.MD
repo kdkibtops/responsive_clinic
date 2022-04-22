@@ -18,7 +18,22 @@ I am intending to use:
 #### Server:
 #### API:
 - Models:
-- - Users:
-- - Clinics:
+    - Users:
+        - Create user: POST ('/users/create')
+            Req.body{
+                "fullname": "", 
+                "username": "", 
+                "password": "", 
+                "role": "", 
+                "degree": "", 
+                "email":""
+                }
+        - Index all users: GET ('/users/index')
+        - Index all users without token: GET ('/users/indexNot')
+        - Shows user: GET ('/users/show')
+        - Update user: PUT ('/users/update')
+        - Delete user: DELETE ('/users/delete')
 
+
+    - Clinics:
 - Handlers:
