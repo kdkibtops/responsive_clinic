@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Sign In</title>
+    <!-- Load Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Fira+Sans:900|Merriweather&display=swap" rel="stylesheet">
+    <!-- Load Styles -->
+    <link href="../../css/styles.css" rel="stylesheet">
+</head>
+
+<body>
+    <a id='homeButton' class='registeration-button' href='../../index.html'><span>Back to Home<span><img src="../icons/home.png" class='home-icon' alt="home"> </a>
+    <div class='registeration-page-heading'>
+        <h2 id='pageTitle'>Sign In</h2>
+    </div>
+    <div id='mainDiv'>
+        <div id='formdata' class='registerationPageDiv'>
+            <form class='registeration-form'>
+                <label for='userName' class='formLabel'>User Name:</label>
+                <input type="text" id="userName" name="userName" class="blank_space_registeration" required> <br>
+                <label for='password' class='formLabel'>Password:</label>
+                <input type='password' id="password" name="password" class="blank_space_registeration" required>
+            </form>
+        </div>
+        <div id='formbuttons' class='registerationPageDiv'>
+            <div id='signInButton' class='registerationPage_button'>Sign In</div>
+            <div id='cancelButton' class='registerationPage_button'>Cancel </div>
+        </div>
+    </div>
+    <footer class="page__footer">
+        <p>By Mustafa Heidar</p>
+    </footer>
+    <script type="module" src="../../js/signin_scripts.js">
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Register</title>
+    <!-- Load Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Fira+Sans:900|Merriweather&display=swap" rel="stylesheet">
+    <!-- Load Styles -->
+    <link href="../../css/styles.css" rel="stylesheet">
+</head>
+
+<body>
+    <a id='homeButton' class='registeration-button' href='../../index.html'><span>Back to Home<span><img src="../icons/home.png" class='home-icon' alt="home"> </a>
+    <div class='registeration-page-heading'>
+        <h2>Register New User</h2>
+    </div>
+    <div class='registerationPageDiv'>
+        <form class='registeration-form'>
+            <label for='fullname' class='formLabel'>Full name:</label><br>
+            <input type="text" id="fullname" name="fullname" class="blank_space_registeration" required> <br>
+            <label for='userName' class='formLabel'>User Name:</label><br>
+            <input type="text" id="userName" name="userName" class="blank_space_registeration" required> <br>
+            <label for='password' class='formLabel'>Password:</label><br>
+            <input type='password' id="password" name="password" class="blank_space_registeration" required> <br>
+            <label for='confirmPassword' class='formLabel'>Confirm Password:</label> <br>
+            <input type='password' id="confirmPassword" name="confirmPassword" class="blank_space_registeration" required><br>
+            <label for='degree' class='formLabel'>Degree:</label><br>
+            <select id="degree" name="degree" class="blank_space_registeration" required>
+                <option value="MD">MD</option>
+                <option value="MSC.">MSC</option>
+                <option value="Bachelor">Bachelor</option>
+                <option value="NA">User</option>
+              </select>
+            <label for='role' class='formLabel'>Role:</label><br>
+            <select id="role" name="role" class="blank_space_registeration" required>
+                <option value="admin">Admin</option>
+                <option value="fellow">Fellow</option>
+                <option value="patient">Patient</option>
+                <option value="user">User</option>
+                <option value="guest">Guest</option>
+              </select>
+            <label for='email' class='formLabel'>Email:</label><br>
+            <input type="email" id="email" name="email" class="blank_space_registeration" required> <br>
+            <div class='registerationPageDiv'>
+                <div id='register' class='registerationPage_button'>Submit</div>
+                <div class='registerationPage_button'>Cancel </div>
+            </div>
+        </form>
+    </div>
+    <footer class="page__footer">
+        <p>By Mustafa Heidar</p>
+    </footer>
+    <script type="module" src="../../js/registeration_scripts.js">
+    </script>
+
+</body>
+
+</html>

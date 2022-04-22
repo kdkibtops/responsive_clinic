@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Maadi Intervention</title>
+    <!-- Load Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Fira+Sans:900|Merriweather&display=swap" rel="stylesheet">
+    <!-- Load Styles -->
+    <link href="../../css/styles.css" rel="stylesheet">
+</head>
+
+<body>
+
+
+    <!-- HTML Follows BEM naming conventions
+  IDs are only used for sections to connect menu achors to sections -->
+    <header class="page__header">
+
+        <nav id="navBar" class="navbar__menu ">
+            <!-- a button to scroll to the top of the page -->
+            <button id="scrollToTopButton">Back to top</button>
+
+            <!-- Navigation starts as empty UL that will be populated with JS -->
+            <ul id="navbar__list" class="navbar__menu ul"></ul>
+
+
+            <div id='resgisteration_div'>
+                <a id='logout' class='registeration-button'>Logout</a>
+            </div>
+
+
+        </nav>
+    </header>
+    <main>
+        <header class="main__hero" style='margin-top:4%'>
+            <h1 id="topElement">Maadi Intervention Clinic</h1>
+
+
+        </header>
+        <!-- Each Section has an ID (used for the anchor) and
+    a data attribute that will populate the li node.
+    Adding more sections will automatically populate nav.
+    The first section is set to active class by default -->
+        <div id='navigationDiv' class='navigationDiv'>
+            <div id='browsePatients' class='buttons'><span id='browsePatients' class='button-span'> Browse Patients</span> <img id='browsePatients' src="..\icons\browse.png" class='icon-image' alt="BROWSE PATIENTS"></div>
+            <div id='newClinic' class='buttons'><span id='newClinic' class='button-span'>Start new Clinic </span><img id='newClinic' src="..\icons\add_new.png" class='icon-image' alt="NEW CLINIC"></div>
+            <div id='stats' class='buttons'><span id='stats' class='button-span'>Statistics </span><img id='stats' src="..\icons\stats.png" class='icon-image' alt="Statistics"></div>
+            <div id='clinicHistory' class='buttons'><span id='clinicHistory' class='button-span'>Clinic History</span><img id='clinicHistory' src="..\icons\clinicHistory.png" class='icon-image' alt="Statistics"></div>
+
+
+        </div>
+
+
+        <div>
+            <br><br><br><br>
+            <h3 style='margin-left:10%'> Add new event
+                <h3>
+        </div>
+        <!-- added new form and button for the page to be interactive and user can add contents -->
+        <div id="addContentDiv" class="landing__container">
+            <form>
+                <label for="sectionName">Event title:</label><br>
+                <textarea type="text" id="sectionName" name="sectionName" class="blank_space"></textarea><br>
+                <label for="content">Description:</label><br>
+                <textarea id="sectionContents" class="blank_space"></textarea>
+            </form>
+
+            <button id="addNewSection" class="add button">Add New Event</button>
+        </div>
+        <!--  -->
+
+        <div>
+            <h2>News feed</h2>
+            <section id="section1" data-nav="Section 1" class="your-active-class">
+                <div class="landing__container">
+                    <h2>Section 1</h2>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi fermentum metus faucibus lectus pharetra dapibus. Suspendisse potenti. Aenean aliquam elementum mi, ac euismod augue. Donec eget lacinia ex. Phasellus imperdiet porta orci
+                        eget mollis. Sed convallis sollicitudin mauris ac tincidunt. Donec bibendum, nulla eget bibendum consectetur, sem nisi aliquam leo, ut pulvinar quam nunc eu augue. Pellentesque maximus imperdiet elit a pharetra. Duis lectus mi,
+                        aliquam in mi quis, aliquam porttitor lacus. Morbi a tincidunt felis. Sed leo nunc, pharetra et elementum non, faucibus vitae elit. Integer nec libero venenatis libero ultricies molestie semper in tellus. Sed congue et odio sed
+                        euismod.
+                    </p>
+
+                    <p>Aliquam a convallis justo. Vivamus venenatis, erat eget pulvinar gravida, ipsum lacus aliquet velit, vel luctus diam ipsum a diam. Cras eu tincidunt arcu, vitae rhoncus purus. Vestibulum fermentum consectetur porttitor. Suspendisse
+                        imperdiet porttitor tortor, eget elementum tortor mollis non.</p>
+                </div>
+            </section>
+            <section id="section2" data-nav="Section 2">
+                <div class="landing__container">
+                    <h2>Section 2</h2>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi fermentum metus faucibus lectus pharetra dapibus. Suspendisse potenti. Aenean aliquam elementum mi, ac euismod augue. Donec eget lacinia ex. Phasellus imperdiet porta orci
+                        eget mollis. Sed convallis sollicitudin mauris ac tincidunt. Donec bibendum, nulla eget bibendum consectetur, sem nisi aliquam leo, ut pulvinar quam nunc eu augue. Pellentesque maximus imperdiet elit a pharetra. Duis lectus mi,
+                        aliquam in mi quis, aliquam porttitor lacus. Morbi a tincidunt felis. Sed leo nunc, pharetra et elementum non, faucibus vitae elit. Integer nec libero venenatis libero ultricies molestie semper in tellus. Sed congue et odio sed
+                        euismod.
+                    </p>
+
+                    <p>Aliquam a convallis justo. Vivamus venenatis, erat eget pulvinar gravida, ipsum lacus aliquet velit, vel luctus diam ipsum a diam. Cras eu tincidunt arcu, vitae rhoncus purus. Vestibulum fermentum consectetur porttitor. Suspendisse
+                        imperdiet porttitor tortor, eget elementum tortor mollis non.</p>
+                </div>
+            </section>
+            <section id="section3" data-nav="Section 3">
+                <div class="landing__container">
+                    <h2>Section 3</h2>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi fermentum metus faucibus lectus pharetra dapibus. Suspendisse potenti. Aenean aliquam elementum mi, ac euismod augue. Donec eget lacinia ex. Phasellus imperdiet porta orci
+                        eget mollis. Sed convallis sollicitudin mauris ac tincidunt. Donec bibendum, nulla eget bibendum consectetur, sem nisi aliquam leo, ut pulvinar quam nunc eu augue. Pellentesque maximus imperdiet elit a pharetra. Duis lectus mi,
+                        aliquam in mi quis, aliquam porttitor lacus. Morbi a tincidunt felis. Sed leo nunc, pharetra et elementum non, faucibus vitae elit. Integer nec libero venenatis libero ultricies molestie semper in tellus. Sed congue et odio sed
+                        euismod.
+                    </p>
+
+                    <p>Aliquam a convallis justo. Vivamus venenatis, erat eget pulvinar gravida, ipsum lacus aliquet velit, vel luctus diam ipsum a diam. Cras eu tincidunt arcu, vitae rhoncus purus. Vestibulum fermentum consectetur porttitor. Suspendisse
+                        imperdiet porttitor tortor, eget elementum tortor mollis non.</p>
+                </div>
+            </section>
+        </div>
+        <div id="main_div"></div>
+    </main>
+    <footer class="page__footer">
+        <p>By Mustafa Heidar</p>
+    </footer>
+    <script src="../../js/reg_index.js">
+    </script>
+</body>
+
+</html>

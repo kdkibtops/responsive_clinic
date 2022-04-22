@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Sign In</title>
+    <!-- Load Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Fira+Sans:900|Merriweather&display=swap" rel="stylesheet">
+    <!-- Load Styles -->
+    <link href="../../css/styles.css" rel="stylesheet">
+</head>
+
+<body>
+    <a id='homeButton' class='registeration-button' href='../../index.html'><span>Back to Home<span><img src="../icons/home.png" class='home-icon' alt="home"> </a>
+    <main>
+        <div id='mainDiv'>
+            <div>
+                <h2>New Clinic</h2>
+            </div>
+            <div class='registerationPageDiv'>
+                <form class='registeration-form'>
+                    <label for="date" class='formLabel'>Date:</label>
+                    <input type="date" id="date" name="Date" class="blank_space_registeration" required>
+                    <!-- <label for="attendingDoctor" class='formLabel'>Attending Doctor:</label>
+                    <input type="text" name="attendingDoctor" id="attendingDoctor" class="blank_space_registeration" required>
+                    <br><br> -->
+                    <label for='attending_doctor' class='formLabel'>Degree:</label><br>
+                    <select id="attending_doctor" name="attending_doctor" class="blank_space_registeration" required>
+
+              </select>
+                    <div id="startNewClinic" class="button">Start New Clinic</div>
+                </form>
+            </div>
+        </div>
+    </main>
+
+
+
+    <footer class="page__footer">
+        <p>By Mustafa Heidar</p>
+    </footer>
+    <script type="module" src="../../js/new_clinic.js">
+    </script>
+</body>
+
+</html>
