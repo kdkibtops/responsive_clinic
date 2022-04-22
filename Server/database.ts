@@ -14,4 +14,18 @@ const client = new Pool({
 
 });
 
+export async function testDB(): Promise<void> {
+    const connected = await client.connect();
+    if (connected) {
+        const sql = `SELECT NOW();`
+        const response = await connected.query(sql);
+        connected.release();
+        const result = response.rows[0].now;
+        console.log(`Connection to database: "${setupData.database}" is successful\nConnected at: ${result}`);
+    } else {
+        console.log(`Error while connecting to database: ${setupData.database}`);
+    }
+}
+
+
 export default client;

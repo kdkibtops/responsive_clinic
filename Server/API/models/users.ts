@@ -23,9 +23,11 @@ export class users {
                 const conn = await client.connect();
                 const SQL = `INSERT INTO users 
                 (fullname, username, password,degree, role, email)
-                VALUES ( '${user.fullname}', '${user.username}', '${user.password}', '${user.degree}', '${user.role}', '${user.email}');`
-                await conn.query(SQL);
-                return (`Registeration successful`);
+                VALUES ( '${user.fullname}', '${user.username}', '${user.password}', '${user.degree}', '${user.role}', '${user.email}') RETURNING *;`
+                const response = await conn.query(SQL);
+                const createdUser = response.rows[0];
+                conn.release();
+                return (`Registeration successful.\nUsername: ${createdUser.username}\nUser id: ${createdUser.id}`);
             } catch (error) {
                 throw new Error(`@createNewUser Function in users model: ${error}`);
             }
@@ -40,6 +42,7 @@ export class users {
             const conn = await client.connect();
             const SQL = `SELECT id, fullname, username, email, degree, role FROM users;`
             const result = await conn.query(SQL);
+            conn.release();
             return result.rows;
         } catch (error) {
             throw new Error(`@indexAllUsers Function in users model: ${error}`)
@@ -57,6 +60,7 @@ export class users {
                 const conn = await client.connect();
                 const SQL = `SELECT id, fullname, username, email, degree, role FROM users WHERE username = '${user_name}'`
                 const result = await conn.query(SQL);
+                conn.release();
                 return result.rows[0];
             } catch (error) {
                 throw new Error(`@ShowUser Function in users model: ${error}`);
@@ -95,6 +99,7 @@ export class users {
                 const conn = await client.connect();
                 const SQL = `DELETE FROM users WHERE username = '${username}'`
                 await conn.query(SQL);
+                conn.release();
                 return (`${username} Deleted successfully`);
             } catch (error) {
                 throw new Error(`@deleteUser Function in users model: ${error}`);

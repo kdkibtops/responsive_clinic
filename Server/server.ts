@@ -4,6 +4,8 @@ import cors from 'cors';
 import { setupData } from './config/config';
 import users_routes from './API/handlers/users_handler';
 import authentication_routes from './API/handlers/authentication_handler';
+import { testDB } from './database'
+import clinics_routes from "./API/handlers/clinics_handler";
 
 
 
@@ -18,8 +20,9 @@ clinicApp.listen(port, startServer);
 function startServer() {
     console.log(`Server started \nRunning on localhost:${port}`);
 }
-
+testDB();
 clinicApp.use(express.static('myWebsite'));
 clinicApp.use('/users', users_routes);
 clinicApp.use('', authentication_routes);
+clinicApp.use('/clinics', clinics_routes);
 

@@ -8,13 +8,16 @@ const authentication_routes = express.Router();
 
 async function authentication(req: express.Request, res: express.Response) {
     try {
-        await authenticateUser(req, res, authenticationSuccess);
+        await authenticateUser(req, res, () => {
+            authenticationSuccess(req.body.username);
+        });
+
     } catch (error) {
         throw new Error(`Authentication error`)
     }
 }
-function authenticationSuccess() {
-    console.log(`Authenticated`);
+function authenticationSuccess(user: string): void {
+    console.log(`${user}: Authenticated`);
 }
 
 

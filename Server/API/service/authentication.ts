@@ -63,6 +63,7 @@ export const authenticateUser = async (
         const BEARER_JWT = 'BEARER ' + JWT
         res.json(BEARER_JWT);
         res.status(200);
+        await user_loggedIn(user_name);
         next();
     } else if (authenticated === false) {
         res.status(401);
@@ -202,3 +203,17 @@ export const getDataFromToken = async (
         throw new Error(`${error}`);
     }
 };
+
+
+// Registers each user login with its TIMESTAMP to track logins
+export async function user_loggedIn(
+    username: string,
+): Promise<void> {
+    try {
+        const conn = await client.connect();
+        const sql = `INSERT INTO users_login (username, login_time) VALUES ('${username}' , NOW());`;
+        await conn.query(sql);
+    } catch (error) {
+        throw new Error(`${error}`);
+    }
+}

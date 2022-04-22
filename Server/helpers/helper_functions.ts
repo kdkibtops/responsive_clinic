@@ -102,11 +102,11 @@ export async function checkUserIDPresentInDB(
 
 // checks if product is already presentin DB
 // if product present return true, if not present return true
-export async function checkProductInDB(
-    product_id: string | number
+export async function checkClinicInDB(
+    clinic_id: string | number
 ): Promise<boolean> {
     const conn = await client.connect();
-    const sql = `SELECT * FROM products WHERE id= '${product_id}';`;
+    const sql = `SELECT * FROM clinics WHERE id= '${clinic_id}';`;
     const result = await conn.query(sql);
     conn.release();
     if (result.rowCount) {

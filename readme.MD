@@ -8,3 +8,12 @@ I am intending to use:
 - Node.js for the server side.
 - React for creating single page application.
 - PostgreSQL DB for managing and storing data.
+
+
+## Structure of the Project:
+### Front end:
+
+### Server:
+#### Database:
+#### Server:
+#### API:
