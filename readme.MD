@@ -20,7 +20,7 @@ I am intending to use:
 - Models:
     - Users:
         - Create user: POST ('/users/create')
-            Req.body{
+            - Req.body{
                 "fullname": "", 
                 "username": "", 
                 "password": "", 
