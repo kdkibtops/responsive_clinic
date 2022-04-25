@@ -1,6 +1,5 @@
 import client from "../database";
 
-
 // function to check if column exits in table, avoid input of wrong column names
 export function checkColumnExits(
     table_name: string,
@@ -100,8 +99,8 @@ export async function checkUserIDPresentInDB(
     }
 }
 
-// checks if product is already presentin DB
-// if product present return true, if not present return true
+// checks if clinic is already presentin DB
+// if clinic present return true, if not present return true
 export async function checkClinicInDB(
     clinic_id: string | number
 ): Promise<boolean> {
@@ -116,13 +115,13 @@ export async function checkClinicInDB(
     }
 }
 
-// checks if order is already presentin DB
-// if order present return true, if not present return true
-export async function checkOrderInDB(
-    order_id: string | number
+// checks if patient is already presentin DB
+// if patient present return true, if not present return true
+export async function checkPatientInDB(
+    national_id: string | number
 ): Promise<boolean> {
     const conn = await client.connect();
-    const sql = `SELECT * FROM orders WHERE id= ${order_id};`;
+    const sql = `SELECT * FROM patients_personal WHERE nationalid= '${national_id}';`;
     const result = await conn.query(sql);
     conn.release();
     if (result.rowCount) {

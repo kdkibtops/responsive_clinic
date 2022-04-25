@@ -94,7 +94,7 @@ async function updateUser(req: express.Request, res: express.Response): Promise<
         if (verification === null) {
             res.json(`Verification failed, Username ${req.body.req_username} is not found in database`);
         } else if (verification === true) {
-            const users__ = await _user_.updateUser(req.body.update_username, req.body.param, req.body.updateValue);
+            const users__ = await _user_.updateUser(req.body.update_username, req.body.updateField, req.body.updateValue);
             res.json(users__);
         } else if (verification === false) {
             res.json(`User verification failed`);

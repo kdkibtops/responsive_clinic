@@ -6,6 +6,7 @@ import users_routes from './API/handlers/users_handler';
 import authentication_routes from './API/handlers/authentication_handler';
 import { testDB } from './database'
 import clinics_routes from "./API/handlers/clinics_handler";
+import patients_routes from "./API/handlers/patients_handler";
 
 
 
@@ -25,4 +26,5 @@ clinicApp.use(express.static('myWebsite'));
 clinicApp.use('/users', users_routes);
 clinicApp.use('', authentication_routes);
 clinicApp.use('/clinics', clinics_routes);
+clinicApp.use('/patients', patients_routes);
 

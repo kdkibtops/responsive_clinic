@@ -21,19 +21,41 @@ I am intending to use:
     - Users:
         - Create user: POST ('/users/create')
             - Req.body{
-                "fullname": "", 
-                "username": "", 
-                "password": "", 
-                "role": "", 
-                "degree": "", 
+                "fullname": "",
+                "username": "",
+                "password": "",
+                "role": "",
+                "degree": "",
                 "email":""
                 }
-        - Index all users: GET ('/users/index')
+        - Index all users: GET ('/users/index') Req.headers.authorization (BEARER JWT)
         - Index all users without token: GET ('/users/indexNot')
-        - Shows user: GET ('/users/show')
+        - Shows user: GET ('/users/show/:username')  
         - Update user: PUT ('/users/update')
-        - Delete user: DELETE ('/users/delete')
-
-
+          - Req.body {"update_username":"", "updateField":"","updateValue":""}
+        - Delete user: DELETE ('/users/delete') Req.body {"req_username":"", "delete_username":""}
+    - Patients:
+        - Register new patient: POST ('patients/registerpatient')
+            - Req.body{
+              "firstName":"",
+              "middleName":"",
+              "lastName":"",
+              "hospitalID":"",
+              "nationalID":"",
+              "mobile":"",
+              "DOB":"",
+              "residence":"",
+              "gender":"",
+              "rank":"",
+              "firstVisit":"",
+              "lastVisit":""
+            }
+        - Index all patients: GET ('patients/indexpatients')
+        - Shows patient: GET ('patients/showpatient') Req.body {"field":"", "value":""}
+        - Update patients: PUT ('patients/updatepatient')
+          - Req.body {"field":"", "value":"", "updateField":"","updateValue":""}
+        - Delete patients: DELETE ('patients/deletepatient') Req.body {"field":"", "value":""}
     - Clinics:
+
+
 - Handlers:

@@ -78,7 +78,7 @@ export class users {
         else if (username_present) {
             try {
                 const conn = await client.connect();
-                const SQL = `UPDATE users SET ${param}='${updateValue} WHERE username = '${username}'`
+                const SQL = `UPDATE users SET ${param}='${updateValue}' WHERE username = '${username}'`
                 await conn.query(SQL);
                 return (`Updating ${username} successful`);
             } catch (error) {

@@ -21,7 +21,6 @@ export class clinic {
             throw new Error(`${error}`);
         }
     }
-
     async deleteClinic(clinic_id: number): Promise<Clinic | string> {
         const clinic_present = await checkClinicInDB(clinic_id);
         if (clinic_present) {
@@ -40,7 +39,6 @@ export class clinic {
         }
 
     }
-
     async updateClinic(clinic_id: number, param: string, updateValue: string): Promise<Clinic | string> {
         const clinic_present = await checkClinicInDB(clinic_id);
         if (clinic_present) {
@@ -59,5 +57,31 @@ export class clinic {
         }
 
     }
+    async showClinic(clinic_id: number): Promise<clinic> {
+        try {
+            const conn = await client.connect();
+            const SQL = `SELECT * FROM clinics WHERE id = ${clinic_id};`;
+            const response = await conn.query(SQL);
+            conn.release();
+            const result = response.rows[0];
+            return result;
+        } catch (error) {
+            throw new Error(`Can't show clinic: Model Level: ${error}`)
+        }
+    }
+    async indexClinics(): Promise<Clinic[]> {
+        try {
+            const conn = await client.connect();
+            const SQL = `SELECT * FROM clinics;`
+            const response = await conn.query(SQL);
+            conn.release();
+            const result = response.rows;
+            return result;
+        } catch (error) {
+            throw new Error(`Can't index all clinics: Model Level: ${error}`);
+        }
+    }
 }
+
+
 
