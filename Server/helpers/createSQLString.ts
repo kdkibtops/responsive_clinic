@@ -1,3 +1,7 @@
+import client from "../database";
+import exrpess from 'express';
+import { Patient } from "../API/models/patients";
+import { Clinic } from "../API/models/clinics";
 
 export function createSQLinsert(tableName: string, columnsName: string[], entries: string[]): string {
     let columns = ``
@@ -13,7 +17,7 @@ export function createSQLinsert(tableName: string, columnsName: string[], entrie
     columns = columns.slice(0, -1);
     values = values.slice(0, -1);
 
-    let SQL = `INSRT INTO ${tableName} (${columns}) VALUES (${values});`;
+    let SQL = `INSERT INTO ${tableName} (${columns}) VALUES (${values});`;
     return SQL;
 }
 
@@ -85,3 +89,22 @@ export function createSQLshowOneOnly(tableName: string, filterColumn: string, fi
     SQL += ` WHERE ${filterColumn}=${filterValue};`
     return SQL;
 };
+
+
+export async function createNew(tableName: string, columnsName: string[], requestBody: exrpess.Request): Promise<Patient | Clinic> {
+    try {
+        const conn = await client.connect();
+        let enteries: string[] = [];
+        console.log(requestBody);
+        for (const value in requestBody) {
+            enteries.push(requestBody[value as keyof typeof requestBody] as string)
+        }
+        const SQL = createSQLinsert(tableName, columnsName, enteries);
+        console.log(SQL);
+        const response = await conn.query(SQL);
+        const result = response.rows[0];
+        return result;
+    } catch (error) {
+        throw new Error(`Can't create entery: Model Level; ${tableName}: ${error}`);
+    }
+}

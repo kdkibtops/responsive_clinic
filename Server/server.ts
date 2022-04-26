@@ -7,6 +7,7 @@ import authentication_routes from './API/handlers/authentication_handler';
 import { testDB } from './database'
 import clinics_routes from "./API/handlers/clinics_handler";
 import patients_routes from "./API/handlers/patients_handler";
+import clinical_data_routes from "./API/handlers/clinical_data_handler";
 
 
 
@@ -27,4 +28,5 @@ clinicApp.use('/users', users_routes);
 clinicApp.use('', authentication_routes);
 clinicApp.use('/clinics', clinics_routes);
 clinicApp.use('/patients', patients_routes);
+clinicApp.use('/patients/clinicalData', clinical_data_routes);
 

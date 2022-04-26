@@ -2,7 +2,6 @@ import * as sqlQueries from '../../helpers/createSQLString';
 import client from '../../database';
 import { checkPatientInDB } from '../../helpers/helper_functions';
 import * as tables from '../../config/tables_variables';
-import { isKeyObject } from 'util/types';
 
 export type Clinical_Data_Type = {
     id?: string,
@@ -22,23 +21,23 @@ export type Clinical_Data_Type = {
 }
 
 export class clinical_data_class {
-    async createNewEntry(newClinicalData: Clinical_Data_Type): Promise<void> {
-        try {
-            // const conn = await client.connect();
-            let newColumns = [];
-            let newEntries = [];
-            for (const column in newClinicalData) {
-                newColumns.push(column);
-                newEntries.push(newClinicalData[column]);
+    async createNewEntry(newClinicalData: string[]): Promise<Clinical_Data_Type | null> {
+        const patientPresent = await checkPatientInDB(newClinicalData[0])
+        if (patientPresent) {
+            try {
+                console.log('Model')
+                const conn = await client.connect();
+                const SQL = sqlQueries.createSQLinsert('clinical_data', tables.clinical_data_table, newClinicalData)
+                console.log(SQL);
+                const response = await conn.query(SQL);
+                conn.release();
+                const result = response.rows[0];
+                return result;
+            } catch (error) {
+                throw new Error(`Can't create new clinical data entry: Handler Level: ${error}`);
             }
-            const SQL = sqlQueries.createSQLinsert('clinical_data', tables.clinical_data_table, [])
-            console.log(SQL);
-            // const response = await conn.query(SQL);
-            // conn.release();
-            // const result = response.rows[0];
-            // return result;
-        } catch (error) {
-            throw new Error(`Can't create new clinical data entry: Handler Level: ${error}`);
+        } else {
+            return null;
         }
     }
 }
