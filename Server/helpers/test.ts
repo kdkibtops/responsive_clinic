@@ -21,8 +21,13 @@ let newColumns = [];
 let newEntries = [];
 for (const column in newClinicalData) {
     newColumns.push(column);
-    newEntries.push(newClinicalData[column]);
+    newEntries.push(newClinicalData[column as keyof typeof newClinicalData]);
 }
+
+for (let i = 0; i < newEntries.length; i++) {
+
+}
+
 
 console.log(newColumns);
 console.log(newEntries);
