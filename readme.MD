@@ -23,7 +23,7 @@ I am intending to use:
     ``` {
         "data":{
           "body":{
-                  "*":""
+                  "column_name":"value"
           },
           "filter":{
               "column":"id",
@@ -32,12 +32,15 @@ I am intending to use:
         }
 
       } ```
+      - Table name will be supplies in the URL as a parameter
       - The API URLs will be:
-        -  `/main/:tableName/registerentry`
-        -  `/main/:tableName/show`
-        -  `/main/:tableName/showall`
-        -  `/main/:tableName/update`
-        -  `/main/:tableName/delete`
+        -  ```/main/:tableName/registerentry```
+        -  ```/main/:tableName/show```
+        -  ```/main/:tableName/showall```
+        -  ```/main/:tableName/update```
+        -  ```/main/:tableName/delete```
+
+
 - Models:
     - Users:
         - Create user: POST ('/users/create')
