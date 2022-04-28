@@ -1,0 +1,1 @@
+DROP TABLE tumor_markers;

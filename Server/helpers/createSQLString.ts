@@ -1,8 +1,3 @@
-import client from "../database";
-import exrpess from 'express';
-import { Patient } from "../API/models/patients";
-import { Clinic } from "../API/models/clinics";
-
 export function createSQLinsert(tableName: string, columnsName: string[], entries: string[]): string {
     let columns = ``
     columnsName.forEach(element => {
@@ -17,7 +12,7 @@ export function createSQLinsert(tableName: string, columnsName: string[], entrie
     columns = columns.slice(0, -1);
     values = values.slice(0, -1);
 
-    let SQL = `INSERT INTO ${tableName} (${columns}) VALUES (${values});`;
+    let SQL = `INSERT INTO ${tableName} (${columns}) VALUES (${values}) RETURNING *;`;
     return SQL;
 }
 
