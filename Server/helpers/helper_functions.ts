@@ -210,3 +210,22 @@ export async function getCertainDataFromProducts(
     conn.release();
     return result.rows[0][neededData];
 }
+
+
+
+// Checks if entry is present in table
+export async function isPresentInDB(
+    table_name: string,
+    filter_column: string,
+    filter_value: string
+): Promise<boolean> {
+    const conn = await client.connect();
+    const sql = `SELECT * FROM ${table_name} WHERE ${filter_column}= '${filter_value}';`;
+    const result = await conn.query(sql);
+    conn.release();
+    if (result.rowCount) {
+        return true;
+    } else {
+        return false;
+    }
+}

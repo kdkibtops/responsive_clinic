@@ -1,17 +1,52 @@
 import * as modelsFunctions from './main_models_functions'
 import express from 'express';
+import { isPresentInDB } from '../helpers/helper_functions';
 
 const main_routes = express.Router();
 
 async function registerNew(req: express.Request, res: express.Response): Promise<void> {
-    try {
-        const data = await modelsFunctions.createNew(req);
-        res.status(200);
-        res.json(data);
-
-    } catch (error) {
-        throw new Error(`Can't register new data: Handler Level: ${error}`);
+    let proceed: boolean = true;
+    const model_table = req.params.tableName;
+    switch (model_table) {
+        case 'clinical_data':
+        case 'cbc':
+        case 'chemistry':
+        case 'virology':
+        case 'tumor_markers':
+        case 'mri':
+        case 'us':
+        case 'ct':
+        case 'tace':
+        case 'rfa':
+        case 'resection':
+        case 'patient_plan': {
+            proceed = await isPresentInDB('patients_personal', req.body.data.filter.column, req.body.data.filter.value);
+            break;
+        }
+        // checks if patiet is already present in DB
+        case 'patients_personal':
+            proceed = ! await isPresentInDB('patients_personal', req.body.data.filter.column, req.body.data.filter.value);
+            break;
     }
+    if (proceed) {
+        try {
+            const data = await modelsFunctions.createNew(req);
+            res.status(200);
+            res.json(data);
+
+        } catch (error) {
+            throw new Error(`Can't register new data: Handler Level: ${error}`);
+        }
+    } else if (!proceed && model_table === 'patients_personal') {
+        res.status(400);
+        res.json(`Patient is already registered in database`);
+    }
+
+    else {
+        res.status(404);
+        res.json(`Patient is not found`);
+    }
+
 }
 async function showEntry(req: express.Request, res: express.Response): Promise<void> {
     try {

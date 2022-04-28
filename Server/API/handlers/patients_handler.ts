@@ -1,4 +1,5 @@
 import express from 'express';
+import { checkPatientInDB } from '../../helpers/helper_functions';
 import { Patient, patients } from '../models/patients';
 
 const patients_routes = express.Router();
@@ -30,16 +31,24 @@ async function registerNewPatient(req: express.Request, res: express.Response): 
 }
 async function showPatient(req: express.Request, res: express.Response): Promise<void> {
     try {
-        const patient = await _patient_.showPatient(req.body.field, req.body.value);
-        if (patient) {
-            res.status(200);
-            res.json(patient);
-        } else {
-            res.json(`Patient not found`);
+        const patientPresent = await checkPatientInDB(req.body.data.body.pat_nat_id);
+        if (patientPresent) {
+            try {
+                const patient = await _patient_.showPatient(req.body.field, req.body.value);
+                if (patient) {
+                    res.status(200);
+                    res.json(patient);
+                } else {
+                    res.json(`Patient not found`);
+                }
+            } catch (err) {
+                throw new Error(`Can not showPatient: Handler Level: ${err}`);
+            }
         }
-    } catch (err) {
-        throw new Error(`Can not showPatient: Handler Level: ${err}`);
+    } catch (error) {
+
     }
+
 }
 async function indexPatients(req: express.Request, res: express.Response): Promise<void> {
     try {

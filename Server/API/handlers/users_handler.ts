@@ -1,10 +1,22 @@
 import { User, users } from "../models/users";
 import express from "express";
-import { authenticateUser, getDataFromToken, passwordHashing, verifyToken, verifyUser } from "../service/authentication";
+import { getDataFromToken, passwordHashing, verifyToken, verifyUser } from "../service/authentication";
+import { authenticateUser } from "../service/main_authentication";
 
 const _user_ = new users();
 const users_routes = express.Router();
 
+// checks users credentials against database, if correct it will supply JWT to response
+// JWT can be stored in localstorage or cookie for further sign in
+async function authentication(req: express.Request, res: express.Response) {
+    try {
+        console.log(req.headers.authorization)
+        const JWT = await authenticateUser(req.body.data, res);
+        res.json(JWT);
+    } catch (error) {
+        throw new Error(`Authentication error`)
+    }
+}
 async function indexNotVerify(req: express.Request, res: express.Response): Promise<void> {
     try {
 
@@ -108,12 +120,19 @@ const welcome = async (
     }
 };
 
-users_routes.get('/indexNot', indexNotVerify);
+// Doesn't nee authentication or JWT
+users_routes.post('/create', createUser);
+users_routes.get('/', welcome)
+
+// this route is used to authenticate the user before dowing anything
+users_routes.post('/authentication', authentication);
+
+
+// all routes will verify token and permissions before allowing any action.
+users_routes.get('/indexNot', verifyToken, indexNotVerify);
 users_routes.get('/index', index);
 users_routes.get('/show/:username', verifyToken, showUser);
-users_routes.post('/create', createUser);
-users_routes.delete('/delete', authenticateUser, verifyToken, deleteUser);
-users_routes.put('update', authenticateUser, verifyToken, updateUser);
-users_routes.get('/', welcome)
+users_routes.delete('/delete', verifyToken, deleteUser);
+users_routes.put('update', verifyToken, updateUser);
 
 export default users_routes;
