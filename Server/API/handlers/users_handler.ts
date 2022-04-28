@@ -76,7 +76,7 @@ async function createUser(req: express.Request, res: express.Response): Promise<
         const users__ = await _user_.createNewUser(newUser);
         res.json(users__);
     } catch (error) {
-        throw new Error(`!Error at handler level!, Can't retrieve data: ${error}`);
+        throw new Error(`!Error at handler level!, Can't create user: ${error}`);
     }
 }
 async function deleteUser(req: express.Request, res: express.Response): Promise<void> {
@@ -130,7 +130,7 @@ users_routes.post('/authentication', authentication);
 
 // all routes will verify token and permissions before allowing any action.
 users_routes.get('/indexNot', verifyToken, indexNotVerify);
-users_routes.get('/index', index);
+users_routes.get('/index', verifyToken, index);
 users_routes.get('/show/:username', verifyToken, showUser);
 users_routes.delete('/delete', verifyToken, deleteUser);
 users_routes.put('update', verifyToken, updateUser);

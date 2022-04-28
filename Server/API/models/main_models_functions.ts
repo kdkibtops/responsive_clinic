@@ -1,9 +1,9 @@
 // This module will be used to replace all models, instead we will pass the table name and request from the handler directly
-import * as SQLqueries from '../helpers/createSQLString';
-import client from "../database";
+import * as SQLqueries from '../../helpers/createSQLString';
+import client from "../../database";
 import exrpess from 'express';
-import { Patient } from "../API/models/patients";
-import { Clinic } from "../API/models/clinics";
+import { Patient } from "./patients";
+import { Clinic } from "./clinics";
 
 export async function createNew(req: exrpess.Request): Promise<Patient | Clinic> {
     try {

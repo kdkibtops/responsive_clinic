@@ -9,7 +9,8 @@ async function submit() {
     const formComplete = checkEmptyFields();
     if (formComplete) {
         try {
-            const newUser = getUserInput();
+            const newUser = { data: { body: getUserInput() } };
+            console.log(newUser);
             const signedIn = await signIn('/authenticate', newUser);
             if (signedIn.status === 200) {
                 const response = await getData(`/users/show/${newUser.username_to_show}`, signedIn.JWT);
