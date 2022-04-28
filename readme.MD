@@ -20,7 +20,7 @@ I am intending to use:
 ## Update [28-3-2022]:
   - I succeeded in creating a new models_functions.ts file and main_handler.ts file that will take care of all Database CRUD operations whatever the table being manipulated:
     The request body should be like below:
-    ` {
+    ``` {
         "data":{
           "body":{
                   "*":""
@@ -31,7 +31,7 @@ I am intending to use:
           }     
         }
 
-      } `
+      } ```
       - The API URLs will be:
         -  `/main/:tableName/registerentry`
         -  `/main/:tableName/show`
