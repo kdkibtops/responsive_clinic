@@ -16,8 +16,6 @@ async function indexNotVerify(req: express.Request, res: express.Response): Prom
         throw new Error(`!Error at handler level!, Can't retrieve data: ${error}`);
     }
 }
-
-
 async function index(req: express.Request, res: express.Response): Promise<void> {
     try {
         const user_data = await getDataFromToken(req, res);
@@ -37,7 +35,6 @@ async function index(req: express.Request, res: express.Response): Promise<void>
         throw new Error(`!Error at handler level!, Can't retrieve data: ${error}`);
     }
 }
-
 async function showUser(req: express.Request, res: express.Response): Promise<void> {
     try {
         const verification = await verifyUser(req.params.username);
@@ -53,7 +50,6 @@ async function showUser(req: express.Request, res: express.Response): Promise<vo
         throw new Error(`!Error at handler level!, Can't retrieve data: ${error}`);
     }
 }
-
 async function createUser(req: express.Request, res: express.Response): Promise<void> {
     try {
         const password_digest = passwordHashing(req.body.password as string);
@@ -71,7 +67,6 @@ async function createUser(req: express.Request, res: express.Response): Promise<
         throw new Error(`!Error at handler level!, Can't retrieve data: ${error}`);
     }
 }
-
 async function deleteUser(req: express.Request, res: express.Response): Promise<void> {
     try {
         const verification = await verifyUser(req.body.req_username);
@@ -87,7 +82,6 @@ async function deleteUser(req: express.Request, res: express.Response): Promise<
         throw new Error(`!Error at handler level!, Can't retrieve data: ${error}`);
     }
 }
-
 async function updateUser(req: express.Request, res: express.Response): Promise<void> {
     try {
         const verification = await verifyUser(req.body.req_username);
@@ -103,7 +97,6 @@ async function updateUser(req: express.Request, res: express.Response): Promise<
         throw new Error(`!Error at handler level!, Can't retrieve data: ${error}`);
     }
 }
-
 const welcome = async (
     req: express.Request,
     res: express.Response
@@ -114,7 +107,6 @@ const welcome = async (
         throw new Error(`Can't welcome`);
     }
 };
-
 
 users_routes.get('/indexNot', indexNotVerify);
 users_routes.get('/index', index);

@@ -1,5 +1,5 @@
 // This module will be used to replace all models, instead we will pass the table name and request from the handler directly
-import * as SQLqueries from './createSQLString';
+import * as SQLqueries from '../helpers/createSQLString';
 import client from "../database";
 import exrpess from 'express';
 import { Patient } from "../API/models/patients";
@@ -17,12 +17,11 @@ export async function createNew(req: exrpess.Request): Promise<Patient | Clinic>
                 columnNames.push(value);
             }
         }
-        const SQL = SQLqueries.createSQLinsert(req.body.params.tableName, columnNames, enteries);
-        console.log(SQL);
+
+        const SQL = SQLqueries.createSQLinsert(req.params.tableName, columnNames, enteries);
         const response = await conn.query(SQL);
         conn.release();
         const result = response.rows[0];
-
         return result;
     } catch (error) {
         throw new Error(`Can't create entery: Model Level; ${req.params.tableName}: ${error}`);
@@ -53,7 +52,7 @@ export async function showAll(req: exrpess.Request, filter: boolean): Promise<Pa
     try {
         const conn = await client.connect();
         let columnsName: string[] = [];
-        let SQL: string = ''
+        let SQL: string = '';
         for (const value in req.body.data.body) {
             if (value !== 'filterColumn' && value !== 'filterValue') {
                 columnsName.push(value);
@@ -67,7 +66,6 @@ export async function showAll(req: exrpess.Request, filter: boolean): Promise<Pa
             SQL = SQLqueries.createSQLshowAll(req.params.tableName, columnsName);
 
         }
-        console.log(SQL);
         const response = await conn.query(SQL);
         conn.release();
         const result = response.rows;
@@ -91,7 +89,6 @@ export async function update(req: exrpess.Request): Promise<Patient | Clinic> {
         }
         const conn = await client.connect();
         const SQL = SQLqueries.createSQLupdate(req.params.tableName, columnNames, enteries, filter.column, filter.value)
-        console.log(SQL);
         const response = await conn.query(SQL);
         conn.release();
         const result = response.rows[0];

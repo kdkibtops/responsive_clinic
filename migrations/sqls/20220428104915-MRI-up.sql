@@ -1,0 +1,23 @@
+CREATE TABLE mri (
+id SERIAL PRIMARY KEY,
+pat_nat_id VARCHAR(14),
+pat_id VARCHAR(10),
+date DATE,
+center VARCHAR(20),
+radiologist VARCHAR(30),
+hfl_number INTEGER,
+hfl_lobe VARCHAR(10),
+hfl_segment VARCHAR(3),
+size NUMERIC,
+aphe VARCHAR(10),
+washout VARCHAR(10),
+capsule VARCHAR(10),
+growth VARCHAR(10),
+diffusion VARCHAR(10),
+mpv VARCHAR (10),
+rpv VARCHAR (10),
+lpv VARCHAR (10),
+ascites VARCHAR (10),
+cirrhosis VARCHAR(10),
+ha_origin VARCHAR(10)
+);

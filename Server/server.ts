@@ -12,7 +12,7 @@ import cbc_routes from "./API/handlers/cbc_handler";
 import chemistry_routes from "./API/handlers/chemistry_handler";
 import virology_routes from "./API/handlers/virology_handler";
 import tumor_markers_routes from "./API/handlers/tumor_markers_handler";
-import main_routes from "./API/handlers/main_handler";
+import main_routes from "./MAIN_API/main_handler";
 
 
 

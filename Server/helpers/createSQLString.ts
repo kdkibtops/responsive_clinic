@@ -11,7 +11,6 @@ export function createSQLinsert(tableName: string, columnsName: string[], entrie
     });
     columns = columns.slice(0, -1);
     values = values.slice(0, -1);
-
     let SQL = `INSERT INTO ${tableName} (${columns}) VALUES (${values}) RETURNING *;`;
     return SQL;
 }

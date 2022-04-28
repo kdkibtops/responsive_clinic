@@ -1,4 +1,4 @@
-import * as modelsFunctions from '../../helpers/models_functions_new'
+import * as modelsFunctions from './main_models_functions'
 import express from 'express';
 
 const main_routes = express.Router();
@@ -24,7 +24,6 @@ async function showEntry(req: express.Request, res: express.Response): Promise<v
 }
 async function showAll(req: express.Request, res: express.Response): Promise<void> {
     try {
-        console.log(req.body);
         const data = await modelsFunctions.showAll(req, true);
         res.status(200);
         res.json(data);
@@ -34,7 +33,6 @@ async function showAll(req: express.Request, res: express.Response): Promise<voi
 }
 async function update(req: express.Request, res: express.Response): Promise<void> {
     try {
-        console.log('Handler')
         const data = await modelsFunctions.update(req);
         res.status(200);
         res.json(data);
@@ -45,7 +43,6 @@ async function update(req: express.Request, res: express.Response): Promise<void
 }
 async function deleteEntry(req: express.Request, res: express.Response): Promise<void> {
     try {
-        console.log()
         const data = await modelsFunctions.deleteEntry(req);
         res.status(200);
         res.json(data);
