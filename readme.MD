@@ -10,6 +10,7 @@ I am intending to use:
 - PostgreSQL DB for managing and storing data.
 
 
+
 ## Structure of the Project:
   ### Front end:
 
