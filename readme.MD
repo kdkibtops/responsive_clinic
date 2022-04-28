@@ -11,13 +11,13 @@ I am intending to use:
 
 
 ## Structure of the Project:
-### Front end:
+  ### Front end:
 
-### Server:
-#### Database:
-#### Server:
-#### API:
-## Update [28-3-2022]:
+  ### Server:
+  #### Database:
+  #### Server:
+  #### API:
+  ## Update [28-3-2022]:
   - I succeeded in creating a new models_functions.ts file and main_handler.ts file that will take care of all Database CRUD operations whatever the table being manipulated:
     The request body should be like below:
 ```JSON
