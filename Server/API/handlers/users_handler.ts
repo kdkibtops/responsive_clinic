@@ -129,9 +129,9 @@ users_routes.post('/authentication', authentication);
 
 
 // all routes will verify token and permissions before allowing any action.
-users_routes.get('/indexNot', verifyToken, indexNotVerify);
-users_routes.get('/index', verifyToken, index);
-users_routes.get('/show/:username', verifyToken, showUser);
+users_routes.patch('/indexNot', verifyToken, indexNotVerify);
+users_routes.patch('/index', verifyToken, index);
+users_routes.patch('/show/:username', verifyToken, showUser);
 users_routes.delete('/delete', verifyToken, deleteUser);
 users_routes.put('update', verifyToken, updateUser);
 

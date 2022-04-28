@@ -6,8 +6,6 @@ import users_routes from './API/handlers/users_handler';
 import { testDB } from './database'
 import main_routes from "./API/handlers/main_handler";
 
-
-
 console.log('started');
 const clinicApp = express();
 clinicApp.use(bodyParser.urlencoded({ extended: false }));
