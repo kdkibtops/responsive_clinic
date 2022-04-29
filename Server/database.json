@@ -1,0 +1,16 @@
+{
+    "dev": {
+        "driver": "pg",
+        "host": "127.0.0.1",
+        "database": "clinicdb",
+        "user": "kdkibtops",
+        "password": "254307830"
+    },
+    "test": {
+        "driver": "pg",
+        "host": "127.0.0.1",
+        "database": "test_DB",
+        "user": "kdkibtops",
+        "password": "254307830"
+    }
+}

@@ -1,5 +1,5 @@
 /* eslint-disable */
-import { User } from "../utilities/models/users";
+import { User } from "../../../../Server/src/API/models/users";
 
 function getUserInput(): User {
     const fullname = document.getElementById('fullname')?.innerText as string;

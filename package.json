@@ -6,7 +6,7 @@
     "scripts": {
         "start": "node dist/server/server.js",
         "prettier": "prettier --config .prettierrc src////*.ts --write",
-        "watch": "tsc-watch --esModuleInTerop server/server.ts --outDir ./dist/server --onSuccess \"node ./dist/server/server.js\"",
+        "watch": "tsc-watch --esModuleInTerop server/src/server.ts --outDir ./server/dist/server --onSuccess \"node ./server/dist/server/server.js\"",
         "build": "npx tsc",
         "gitpush": "git add . && git commit -m \"new update\" && git status && git push"
     },

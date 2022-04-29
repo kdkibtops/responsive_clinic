@@ -10,7 +10,6 @@ const users_routes = express.Router();
 // JWT can be stored in localstorage or cookie for further sign in
 async function authentication(req: express.Request, res: express.Response) {
     try {
-        console.log(req.headers.authorization)
         const JWT = await authenticateUser(req.body.data, res);
         res.json(JWT);
     } catch (error) {
@@ -64,14 +63,14 @@ async function showUser(req: express.Request, res: express.Response): Promise<vo
 }
 async function createUser(req: express.Request, res: express.Response): Promise<void> {
     try {
-        const password_digest = passwordHashing(req.body.password as string);
+        const password_digest = passwordHashing(req.body.data.body.password as string);
         const newUser: User = {
-            fullname: req.body.fullname,
-            username: req.body.username,
+            fullname: req.body.data.body.fullname,
+            username: req.body.data.body.username,
             password: password_digest,
-            role: req.body.role,
-            degree: req.body.degree,
-            email: req.body.email
+            role: req.body.data.body.role,
+            degree: req.body.data.body.degree,
+            email: req.body.data.body.email
         }
         const users__ = await _user_.createNewUser(newUser);
         res.json(users__);

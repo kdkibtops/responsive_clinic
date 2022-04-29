@@ -10,10 +10,9 @@ async function submit() {
     if (formComplete) {
         try {
             const newUser = { data: { body: getUserInput() } };
-            console.log(newUser);
-            const signedIn = await signIn('/authenticate', newUser);
+            const signedIn = await signIn('/users/authentication', newUser);
             if (signedIn.status === 200) {
-                const response = await getData(`/users/show/${newUser.username_to_show}`, signedIn.JWT);
+                const response = await getData(`/users/show/${newUser.data.body.username_to_show}`, signedIn.JWT);
                 if (response.status === 200) {
                     // window.location.href = 'registered_index.html'
                     resetPage(response.data.username);

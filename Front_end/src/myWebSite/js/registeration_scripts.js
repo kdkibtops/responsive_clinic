@@ -7,7 +7,7 @@ async function submitRegisteration() {
     if (passowrdConfirmed) {
         const formComplete = checkEmptyFields();
         if (formComplete) {
-            const newUser = getUserInput();
+            const newUser = { data: { body: getUserInput() } }
             const resp = await registerNewUser('/users/create', newUser);
             alert(resp);
             if (resp === `Registeration successful`) {

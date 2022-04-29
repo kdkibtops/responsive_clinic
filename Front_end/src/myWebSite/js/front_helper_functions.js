@@ -46,11 +46,11 @@ export async function signIn(url, newUser) {
 export async function getData(url, JWT) {
     try {
         const response = await fetch(url, {
-            method: 'GET',
+            method: 'PATCH',
             credentials: 'same-origin',
             headers: {
                 'Content-type': 'application/json',
-                'Authorization': JWT
+                'Authorization': `BEARER ` + JWT
             },
         });
 
