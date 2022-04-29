@@ -13,7 +13,7 @@ I am intending to use:
 
 ## Structure of the Project:
   ### Front end:
-
+    - Still undetermined.
   ### Server:
   #### Database:
   #### Server:
@@ -55,45 +55,49 @@ I am intending to use:
 ```
 
 
-- Models:
+- Handlers:
     - Users:
-        - Create user: POST ('/users/create')
-            - Req.body{
+        - Create user: POST 
+        ```
+        '/users/create'
+        ```
+    The request.body should look like this:
+
+```JSON
+{
+          data: {
+            body:{
                 "fullname": "",
                 "username": "",
                 "password": "",
                 "role": "",
                 "degree": "",
                 "email":""
-                }
-        - Index all users: GET ('/users/index') Req.headers.authorization (BEARER JWT)
-        - Index all users without token: GET ('/users/indexNot')
-        - Shows user: GET ('/users/show/:username')  
-        - Update user: PUT ('/users/update')
-          - Req.body {"update_username":"", "updateField":"","updateValue":""}
-        - Delete user: DELETE ('/users/delete') Req.body {"req_username":"", "delete_username":""}
-    - Patients:
-        - Register new patient: POST ('patients/registerpatient')
-            - Req.body{
-              "firstName":"",
-              "middleName":"",
-              "lastName":"",
-              "hospitalID":"",
-              "nationalID":"",
-              "mobile":"",
-              "DOB":"",
-              "residence":"",
-              "gender":"",
-              "rank":"",
-              "firstVisit":"",
-              "lastVisit":""
             }
-        - Index all patients: GET ('patients/indexpatients')
-        - Shows patient: GET ('patients/showpatient') Req.body {"field":"", "value":""}
-        - Update patients: PUT ('patients/updatepatient')
-          - Req.body {"field":"", "value":"", "updateField":"","updateValue":""}
-        - Delete patients: DELETE ('patients/deletepatient') Req.body {"field":"", "value":""}
-    - Clinics:
+          }
+        }
+```
 
+  - Index all users: PATCH 
+````
+    '/users/index' 
+````
+````
+Req.headers.authorization (BEARER JWT) 
 
-- Handlers:
+````
+  - Index all users without token: PATCH 
+````
+ '/users/indexNot'
+````
+  - Shows user: GET 
+````
+'/users/show/:username'
+````  
+  - Update user: PUT 
+````
+'/users/update'
+````
+
+  - Req.body {"update_username":"", "updateField":"","updateValue":""}
+  - Delete user: DELETE ('/users/delete') Req.body {"req_username":"", "delete_username":""}
