@@ -31,7 +31,7 @@ async function index(req: express.Request, res: express.Response): Promise<void>
         const user_data = await getDataFromToken(req, res);
         const verification = await verifyUser(user_data.username, '', 'admin');
         if (verification === null) {
-            res.status(401);
+            res.status(404);
             res.json(`Verification failed, Username ${req.body.username} is not found in database`);
         } else if (verification === true) {
             const users__ = await _user_.indexAllUsers();
@@ -49,6 +49,7 @@ async function showUser(req: express.Request, res: express.Response): Promise<vo
     try {
         const verification = await verifyUser(req.params.username);
         if (verification === null) {
+            res.status(404);
             res.json(`Verification failed, Username ${req.params.username} is not found in database`);
         } else if (verification === true) {
             const users__ = await _user_.showUser(req.params.username);
@@ -83,7 +84,7 @@ async function deleteUser(req: express.Request, res: express.Response): Promise<
         if (verification === null) {
             res.json(`Verification failed, Username ${req.body.req_username} is not found in database`);
         } else if (verification === true) {
-            const users__ = await _user_.deleteUser(req.body.delete_username);
+            const users__ = await _user_.deleteUser(req.body.username);
             res.json(users__);
         } else if (verification === false) {
             res.json(`User verification failed`);
@@ -98,7 +99,7 @@ async function updateUser(req: express.Request, res: express.Response): Promise<
         if (verification === null) {
             res.json(`Verification failed, Username ${req.body.req_username} is not found in database`);
         } else if (verification === true) {
-            const users__ = await _user_.updateUser(req.body.update_username, req.body.updateField, req.body.updateValue);
+            const users__ = await _user_.updateUser(req.body.username, req.body.updateField, req.body.updateValue);
             res.json(users__);
         } else if (verification === false) {
             res.json(`User verification failed`);
@@ -131,6 +132,6 @@ users_routes.patch('/indexNot', verifyToken, indexNotVerify);
 users_routes.patch('/index', verifyToken, index);
 users_routes.patch('/show/:username', verifyToken, showUser);
 users_routes.delete('/delete', verifyToken, deleteUser);
-users_routes.put('update', verifyToken, updateUser);
+users_routes.put('/update', verifyToken, updateUser);
 
 export default users_routes;

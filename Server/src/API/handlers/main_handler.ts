@@ -1,6 +1,7 @@
 import * as modelsFunctions from '../models/main_models_functions'
 import express from 'express';
 import { isPresentInDB } from '../../helpers/helper_functions';
+import { verifyToken, verifyUser } from '../service/main_authentication';
 
 const main_routes = express.Router();
 
@@ -68,7 +69,33 @@ async function showAll(req: express.Request, res: express.Response): Promise<voi
     const proceed = await isPresentInDB(req.params.tableName, req.body.data.filter.column, req.body.data.filter.value);
     if (proceed) {
         try {
-            const data = await modelsFunctions.showAll(req, true);
+            let filtering = false;
+            switch (req.params.tableName) {
+                case 'users':
+                case 'patients_personal':
+                case 'clinics':
+                    filtering = false;
+                    break;
+                case 'cbc':
+                case ' mri':
+                case 'patient_plan':
+                case 'patients_visits':
+                case 'resection':
+                case 'rfa':
+                case 'tace':
+                case 'tumor_markers':
+                case 'ultrasound':
+                case 'users_login':
+                case 'chemistry':
+                case 'clinical_data':
+                case 'ct':
+                case 'virology':
+                    filtering = true;
+                    break;
+
+            }
+            console.log(`Filtering: ${filtering}`);
+            const data = await modelsFunctions.showAll(req, filtering);
             res.status(200);
             res.json(data);
         } catch (error) {
@@ -114,10 +141,10 @@ async function deleteEntry(req: express.Request, res: express.Response): Promise
 
 
 main_routes.post('/:tableName/registerentry', registerNew);
-main_routes.patch('/:tableName/show', showEntry);
-main_routes.patch('/:tableName/showall', showAll);
-main_routes.put('/:tableName/update', update);
-main_routes.delete('/:tableName/delete', deleteEntry);
+main_routes.patch('/:tableName/showone', verifyToken, showEntry);
+main_routes.patch('/:tableName/showall', verifyToken, showAll);
+main_routes.put('/:tableName/update', verifyToken, update);
+main_routes.delete('/:tableName/delete', verifyToken, deleteEntry);
 
 
 

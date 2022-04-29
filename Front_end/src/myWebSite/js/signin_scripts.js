@@ -12,7 +12,21 @@ async function submit() {
             const newUser = { data: { body: getUserInput() } };
             const signedIn = await signIn('/users/authentication', newUser);
             if (signedIn.status === 200) {
-                const response = await getData(`/users/show/${newUser.data.body.username_to_show}`, signedIn.JWT);
+                const reqBody = {
+                    data: {
+                        body: {
+                            // write here columns you want to show
+                            "*": ""
+                        },
+                        filter: {
+                            // filter for getting the user
+                            column: "username",
+                            value: getUserInput().username
+                        }
+                    }
+                }
+                window.localStorage.setItem('username', getUserInput().username);
+                const response = await getData(`/main/users/showone`, signedIn.JWT, reqBody);
                 if (response.status === 200) {
                     // window.location.href = 'registered_index.html'
                     resetPage(response.data.username);
@@ -254,7 +268,21 @@ document.addEventListener('click', (evt) => {
 document.addEventListener('click', async(evt) => {
     const id = evt.target.id
     if (id === 'showUsersButton') {
-        const allUsers = await getData('/users/index', JWT);
+        const reqBody = {
+            data: {
+                body: {
+                    // write here columns you want to show
+                    "*": ""
+                },
+                filter: {
+                    // filter for getting the user
+                    column: "username",
+                    value: window.localStorage.getItem('username')
+                }
+            }
+        }
+        window.localStorage.removeItem('username');
+        const allUsers = await getData('/users/index', JWT, reqBody);
         if (allUsers.status === 200) {
             const currenUserId = document.getElementById('currentUser').innerText;
             for (let i = 0; i < allUsers.data.length; i++) {

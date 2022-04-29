@@ -2,10 +2,10 @@
 import * as SQLqueries from '../../helpers/createSQLString';
 import client from "../../database";
 import exrpess from 'express';
-import { Patient } from "./patients";
-import { Clinic } from "./clinics";
+import { cbc, mri, users, patient_plan, patients_personal, patients_visits, resection, rfa, tace, tumor_markers, ultrasound, users_login, chemistry, clinical_data, clinics, ct, virology } from '../../config/tables'
 
-export async function createNew(req: exrpess.Request): Promise<Patient | Clinic> {
+
+export async function createNew(req: exrpess.Request): Promise<cbc | mri | users | patient_plan | patients_personal | patients_visits | resection | rfa | tace | tumor_markers | ultrasound | users_login | chemistry | clinical_data | clinics | ct | virology> {
     try {
         const conn = await client.connect();
         let enteries: string[] = [];
@@ -27,7 +27,7 @@ export async function createNew(req: exrpess.Request): Promise<Patient | Clinic>
         throw new Error(`Can't create entery: Model Level; ${req.params.tableName}: ${error}`);
     }
 }
-export async function showOne(req: exrpess.Request): Promise<Patient | Clinic> {
+export async function showOne(req: exrpess.Request): Promise<cbc | mri | users | patient_plan | patients_personal | patients_visits | resection | rfa | tace | tumor_markers | ultrasound | users_login | chemistry | clinical_data | clinics | ct | virology> {
     try {
         const conn = await client.connect();
         let columnsNames: string[] = [];
@@ -36,6 +36,7 @@ export async function showOne(req: exrpess.Request): Promise<Patient | Clinic> {
                 columnsNames.push(value);
             }
         }
+
         const filter = req.body.data.filter;
         const SQL = SQLqueries.createSQLshowOneOnly(req.params.tableName, filter.column, filter.value, columnsNames);
         console.log(SQL);
@@ -48,7 +49,7 @@ export async function showOne(req: exrpess.Request): Promise<Patient | Clinic> {
     }
 }
 // filter is used to determine whether the caller handler will need filter or not
-export async function showAll(req: exrpess.Request, filter: boolean): Promise<Patient[] | Clinic[]> {
+export async function showAll(req: exrpess.Request, filter: boolean): Promise<cbc[] | mri[] | users[] | patient_plan[] | patients_personal[] | patients_visits[] | resection[] | rfa[] | tace[] | tumor_markers[] | ultrasound[] | users_login[] | chemistry[] | clinical_data[] | clinics[] | ct[] | virology[]> {
     try {
         const conn = await client.connect();
         let columnsName: string[] = [];
@@ -66,6 +67,7 @@ export async function showAll(req: exrpess.Request, filter: boolean): Promise<Pa
             SQL = SQLqueries.createSQLshowAll(req.params.tableName, columnsName);
 
         }
+        console.log(SQL);
         const response = await conn.query(SQL);
         conn.release();
         const result = response.rows;
@@ -75,7 +77,7 @@ export async function showAll(req: exrpess.Request, filter: boolean): Promise<Pa
 
     }
 }
-export async function update(req: exrpess.Request): Promise<Patient | Clinic> {
+export async function update(req: exrpess.Request): Promise<cbc | mri | users | patient_plan | patients_personal | patients_visits | resection | rfa | tace | tumor_markers | ultrasound | users_login | chemistry | clinical_data | clinics | ct | virology> {
     try {
         let enteries: string[] = [];
         let columnNames: string[] = [];
@@ -98,7 +100,7 @@ export async function update(req: exrpess.Request): Promise<Patient | Clinic> {
     }
 
 }
-export async function deleteEntry(req: exrpess.Request): Promise<Patient | Clinic> {
+export async function deleteEntry(req: exrpess.Request): Promise<cbc | mri | users | patient_plan | patients_personal | patients_visits | resection | rfa | tace | tumor_markers | ultrasound | users_login | chemistry | clinical_data | clinics | ct | virology> {
     try {
         const conn = await client.connect();
         const filter = req.body.data.filter;

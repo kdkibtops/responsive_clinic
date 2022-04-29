@@ -38,29 +38,34 @@ I am intending to use:
 ### Table name will be supplies in the URL as a parameter:
 ### The API URLs will be as follow:   
 
+#### Main Handlers:
 ```
 /main/:tableName/registerentry 
 ```
 ``` 
-/main/:tableName/show 
+/main/:tableName/show  <token requires>
 ```
 ``` 
-/main/:tableName/showall 
+/main/:tableName/showall  <token requires>
 ```
 ``` 
-/main/:tableName/update 
+/main/:tableName/update   <token requires>
 ```
 ```
-/main/:tableName/delete 
+/main/:tableName/delete   <token requires>
 ```
 
+Token: to be passed as follow:
+````
+Req.headers.authorization (BEARER JWT) 
 
-- Handlers:
-    - Users:
-        - Create user: POST 
-        ```
-        '/users/create'
-        ```
+````
+
+#### User handler:
+  - Create user: POST 
+```
+  '/users/create'
+```
     The request.body should look like this:
 
 ```JSON
@@ -85,19 +90,9 @@ I am intending to use:
 ````
 Req.headers.authorization (BEARER JWT) 
 
-````
-  - Index all users without token: PATCH 
-````
- '/users/indexNot'
-````
-  - Shows user: GET 
+- Shows user: GET 
 ````
 '/users/show/:username'
 ````  
-  - Update user: PUT 
-````
-'/users/update'
-````
 
-  - Req.body {"update_username":"", "updateField":"","updateValue":""}
-  - Delete user: DELETE ('/users/delete') Req.body {"req_username":"", "delete_username":""}
+

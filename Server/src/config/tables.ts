@@ -208,3 +208,9 @@ export type users_login = {
     username?: string,
     login_time?: string
 }
+export type patients_visits = {
+    id?: string,
+    pat_nat_id?: string,
+    pat_id?: string,
+    clinic_id?: string
+}

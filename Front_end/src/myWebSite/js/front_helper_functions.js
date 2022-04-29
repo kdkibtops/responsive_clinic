@@ -43,8 +43,9 @@ export async function signIn(url, newUser) {
 }
 
 // if user is authenticated, then this function will be called accepting JWT to verify user to access data
-export async function getData(url, JWT) {
+export async function getData(url, JWT, req_data) {
     try {
+        const reqData = JSON.stringify(req_data);
         const response = await fetch(url, {
             method: 'PATCH',
             credentials: 'same-origin',
@@ -52,6 +53,7 @@ export async function getData(url, JWT) {
                 'Content-type': 'application/json',
                 'Authorization': `BEARER ` + JWT
             },
+            body: reqData
         });
 
         const rcvData = await response.json();
