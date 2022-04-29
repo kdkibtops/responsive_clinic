@@ -1,7 +1,6 @@
 import { User, users } from "../models/users";
 import express from "express";
-import { getDataFromToken, passwordHashing, verifyToken, verifyUser } from "../service/authentication";
-import { authenticateUser } from "../service/main_authentication";
+import { authenticateUser, getDataFromToken, passwordHashing, verifyToken, verifyUser } from "../service/main_authentication";
 
 const _user_ = new users();
 const users_routes = express.Router();
