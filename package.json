@@ -8,11 +8,7 @@
         "prettier": "prettier --config .prettierrc src////*.ts --write",
         "watch": "tsc-watch --esModuleInTerop server/src/server.ts --outDir ./server/dist/server --onSuccess \"node ./server/dist/server/server.js\"",
         "build": "npx tsc",
-        "gitadd": "git add .",
-        "gitcommit": "git commit",
-        "gitpu": "git status && git push",
-        "gitpush": "git add . && git commit -m \"new update\" && git status && git push",
-        "gitpushnew": "git add . && git commit && git status && git push"
+        "gitpush": "git add . && git commit && git status && git push"
     },
     "repository": {
         "type": "git",

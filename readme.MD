@@ -65,17 +65,17 @@ I am intending to use:
 
 ```JSON
 {
-          data: {
-            body:{
-                "fullname": "",
-                "username": "",
-                "password": "",
-                "role": "",
-                "degree": "",
-                "email":""
-            }
-          }
-        }
+  "data": {
+    "body":{
+      "fullname": "",
+      "username": "",
+      "password": "",
+      "role": "",
+      "degree": "",
+      "email":""
+    }
+  }
+}        
 ```
 
   - Index all users: PATCH 
