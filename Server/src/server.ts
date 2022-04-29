@@ -19,7 +19,6 @@ clinicApp.listen(port, startServer);
 function startServer() {
     console.log(`Server started \nRunning on localhost:${port}`);
 }
-
 testDB();
 
 clinicApp.use(express.static(path.join(__dirname, '../../../Front_end/src/', 'myWebSite')));
