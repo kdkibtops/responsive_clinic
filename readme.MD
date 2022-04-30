@@ -96,7 +96,7 @@ Show user| ```/users/show/:username```| GET
 
 # Suggested Workflow: #
 
-1. [] Home page is served containing login and register as well as most relevant newsfeed (Still developing).
+1. [ ] Home page is served containing login and register as well as most relevant newsfeed (Still developing).
 2. [x] User registers and then signs in to account.
-3. [] After sign in JWT is passed to the user
-4. [] The user passes JWT with Req.headers.authorization
+3. [ ] After sign in JWT is passed to the user
+4. [ ] The user passes JWT with Req.headers.authorization
