@@ -91,14 +91,12 @@ Req.headers.authorization (BEARER JWT)
 
 Route   |   URL   |   Method
 ------- |---------|----------
-Index   |/users/index| PATCH
-
-  - Index all users: 
-        Method: 'PATCH' url: /users/index
-  - Show user: 
-        Method: 'GET'   url: /users/show/:username
+Index all users   |```/users/index```| PATCH
+Show user| ```/users/show/:username```| GET
 
 # Suggested Workflow: #
 
- Home page is served containing login and register as well as most relevant newsfeed (Still developing).
-#2 
+1. [] Home page is served containing login and register as well as most relevant newsfeed (Still developing).
+2. [x] User registers and then signs in to account.
+3. [] After sign in JWT is passed to the user
+4. [] The user passes JWT with Req.headers.authorization
