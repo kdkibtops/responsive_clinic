@@ -105,35 +105,37 @@ Show user| ```/users/show/:username```| GET
     - Add new patient
     - Browse all patients (patients summary)
     - Show a patient:
-      - Summary:
-        __Fullname, Age, National_id, Residence, Contacts, Rank, Last_visit, Furthers, Decision, Next_visit__
-      - Personal data:
-        __Date of birth, Hospital_id, Gender__
-      - Clinical data:
-        __DM, HTN, HCV, HBV, HIV, CKD, Disability, Cardiac__
-      - Laboratory:
-        - CBC: __Hb, TLC, Platelets, INR__
-        - Chemistry: __All__
-        - Virology: __All__
-        - Tumor markers: __All__
-      - Imaging:
-        - Ultrasound: __All__
-        - CT: __All__
-        - MRI: __All__
-      - Interventions:
-        - TACE: __All__
-        - RFA: __All__
-        - Resection: __All__
-      - Patient Plan:
-        __Decision, Furthers, Radiologist, Remarks__
-    - Edit a patient: Each table to be edited separtely according to data updated.
-    - Delete a patient
-    - Browse patients with filters
-    - Add patient to a clinic: will use `patients_visits` router
+      - __Summary:__
+        Fullname, Age, National_id, Residence, Contacts, Rank, Last_visit, Furthers, Decision, Next_visit
+      - __Personal data:__
+        Date of birth, Hospital_id, Gender
+      - __Clinical data:__
+        DM, HTN, HCV, HBV, HIV, CKD, Disability, Cardiac
+      - __Laboratory:__
+        - CBC: Hb, TLC, Platelets, INR
+        - Chemistry: All
+        - Virology: All
+        - Tumor markers: All
+      - __Imaging:__
+        - Ultrasound: All
+        - CT: All
+        - MRI: All
+      - __Interventions:__
+        - TACE: All
+        - RFA: All
+        - Resection: All
+      - __Patient Plan:__
+        Decision, Furthers, Radiologist, Remarks
+    - __Edit a patient:__ Each table to be edited separtely according to data updated.
+    - __Delete a patient:__
+    - __Browse patients with filters__
+    - __Add patient to a clinic:__ 
+      - Will use `patients_visits` router.
+      - Patient must registered first before adding to patients_visits
   - Clinics: 
-    - Add new clinic
-    - Browse all clinics (clinic summary)
-    - Show a clinic: __Date, Attending physician, Number of patient__
-    - Edit a clinic: __Date, Attending_phsyician__
-    - Delete a clinic
+    - __Add new clinic:__
+    - __Browse all clinics:__ (clinic summary)
+    - __Show a clinic:__ Date, Attending physician, Number of patient
+    - __Edit a clinic:__ Date, Attending_phsyician
+    - __Delete a clinic:__
   - Newsfeed
