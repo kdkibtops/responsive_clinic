@@ -2,10 +2,10 @@
 import * as SQLqueries from '../../helpers/createSQLString';
 import client from "../../database";
 import exrpess from 'express';
-import { cbc, mri, users, patient_plan, patients_personal, patients_visits, resection, rfa, tace, tumor_markers, ultrasound, users_login, chemistry, clinical_data, clinics, ct, virology } from '../../config/tables'
+import { CBC, MRI, USERS, PATIENT_PLAN, PATIENTS_PERSONAL, PATIENTS_VISITS, RESECTION, RFA, TACE, TUMOR_MARKERS, ULTRASOUND, USERS_LOGIN, CHEMISTRY, CLINICAL_DATA, CLINICS, CT, VIROLOGY } from '../../config/clinicTypes'
 
 
-export async function createNew(req: exrpess.Request): Promise<cbc | mri | users | patient_plan | patients_personal | patients_visits | resection | rfa | tace | tumor_markers | ultrasound | users_login | chemistry | clinical_data | clinics | ct | virology> {
+export async function createNew(req: exrpess.Request): Promise<CBC | MRI | USERS | PATIENT_PLAN | PATIENTS_PERSONAL | PATIENTS_VISITS | RESECTION | RFA | TACE | TUMOR_MARKERS | ULTRASOUND | USERS_LOGIN | CHEMISTRY | CLINICAL_DATA | CLINICS | CT | VIROLOGY> {
     try {
         const conn = await client.connect();
         let enteries: string[] = [];
@@ -27,7 +27,7 @@ export async function createNew(req: exrpess.Request): Promise<cbc | mri | users
         throw new Error(`Can't create entery: Model Level; ${req.params.tableName}: ${error}`);
     }
 }
-export async function showOne(req: exrpess.Request): Promise<cbc | mri | users | patient_plan | patients_personal | patients_visits | resection | rfa | tace | tumor_markers | ultrasound | users_login | chemistry | clinical_data | clinics | ct | virology> {
+export async function showOne(req: exrpess.Request): Promise<CBC | MRI | USERS | PATIENT_PLAN | PATIENTS_PERSONAL | PATIENTS_VISITS | RESECTION | RFA | TACE | TUMOR_MARKERS | ULTRASOUND | USERS_LOGIN | CHEMISTRY | CLINICAL_DATA | CLINICS | CT | VIROLOGY> {
     try {
         const conn = await client.connect();
         let columnsNames: string[] = [];
@@ -49,7 +49,7 @@ export async function showOne(req: exrpess.Request): Promise<cbc | mri | users |
     }
 }
 // filter is used to determine whether the caller handler will need filter or not
-export async function showAll(req: exrpess.Request, filter: boolean): Promise<cbc[] | mri[] | users[] | patient_plan[] | patients_personal[] | patients_visits[] | resection[] | rfa[] | tace[] | tumor_markers[] | ultrasound[] | users_login[] | chemistry[] | clinical_data[] | clinics[] | ct[] | virology[]> {
+export async function showAll(req: exrpess.Request, filter: boolean): Promise<CBC[] | MRI[] | USERS[] | PATIENT_PLAN[] | PATIENTS_PERSONAL[] | PATIENTS_VISITS[] | RESECTION[] | RFA[] | TACE[] | TUMOR_MARKERS[] | ULTRASOUND[] | USERS_LOGIN[] | CHEMISTRY[] | CLINICAL_DATA[] | CLINICS[] | CT[] | VIROLOGY[]> {
     try {
         const conn = await client.connect();
         let columnsName: string[] = [];
@@ -77,7 +77,7 @@ export async function showAll(req: exrpess.Request, filter: boolean): Promise<cb
 
     }
 }
-export async function update(req: exrpess.Request): Promise<cbc | mri | users | patient_plan | patients_personal | patients_visits | resection | rfa | tace | tumor_markers | ultrasound | users_login | chemistry | clinical_data | clinics | ct | virology> {
+export async function update(req: exrpess.Request): Promise<CBC | MRI | USERS | PATIENT_PLAN | PATIENTS_PERSONAL | PATIENTS_VISITS | RESECTION | RFA | TACE | TUMOR_MARKERS | ULTRASOUND | USERS_LOGIN | CHEMISTRY | CLINICAL_DATA | CLINICS | CT | VIROLOGY> {
     try {
         let enteries: string[] = [];
         let columnNames: string[] = [];
@@ -100,7 +100,7 @@ export async function update(req: exrpess.Request): Promise<cbc | mri | users | 
     }
 
 }
-export async function deleteEntry(req: exrpess.Request): Promise<cbc | mri | users | patient_plan | patients_personal | patients_visits | resection | rfa | tace | tumor_markers | ultrasound | users_login | chemistry | clinical_data | clinics | ct | virology> {
+export async function deleteEntry(req: exrpess.Request): Promise<CBC | MRI | USERS | PATIENT_PLAN | PATIENTS_PERSONAL | PATIENTS_VISITS | RESECTION | RFA | TACE | TUMOR_MARKERS | ULTRASOUND | USERS_LOGIN | CHEMISTRY | CLINICAL_DATA | CLINICS | CT | VIROLOGY> {
     try {
         const conn = await client.connect();
         const filter = req.body.data.filter;

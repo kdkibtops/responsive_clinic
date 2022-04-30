@@ -1,4 +1,4 @@
-export type cbc = {
+export type CBC = {
     id?: string,
     pat_nat_id?: string,
     pat_id?: string,
@@ -9,7 +9,7 @@ export type cbc = {
     tlc?: number,
     inr?: number
 }
-export type chemistry = {
+export type CHEMISTRY = {
     id?: string,
     pat_nat_id?: string,
     pat_id?: string,
@@ -25,7 +25,7 @@ export type chemistry = {
     potassium?: number,
     sodium?: number
 }
-export type clinical_data = {
+export type CLINICAL_DATA = {
     id?: string,
     pat_nat_id?: string,
     pat_id?: string,
@@ -42,12 +42,12 @@ export type clinical_data = {
     disability?: string,
     cardiac?: string
 }
-export type clinics = {
+export type CLINICS = {
     id?: string,
     date?: string,
-    attending_phys: string
+    attending_phys?: string
 }
-export type ct = {
+export type CT = {
     id?: string,
     pat_nat_id?: string,
     pat_id?: string,
@@ -70,7 +70,7 @@ export type ct = {
     cirrhosis?: string,
     ha_origin?: string,
 }
-export type mri = {
+export type MRI = {
     id?: string,
     pat_nat_id?: string,
     pat_id?: string,
@@ -93,7 +93,7 @@ export type mri = {
     cirrhosis?: string,
     ha_origin?: string
 }
-export type patient_plan = {
+export type PATIENT_PLAN = {
     id?: string,
     pat_nat_id?: string,
     pat_id?: string,
@@ -104,7 +104,7 @@ export type patient_plan = {
     further?: string,
     remarks?: string
 }
-export type patients_personal = {
+export type PATIENTS_PERSONAL = {
     id?: string,
     firstname?: string,
     middlename?: string,
@@ -119,7 +119,7 @@ export type patients_personal = {
     firstvisit?: string,
     lastvisit?: string
 }
-export type resection = {
+export type RESECTION = {
     id?: string,
     pat_nat_id?: string,
     pat_id?: string,
@@ -131,7 +131,7 @@ export type resection = {
     transplant?: string,
     remarks?: string
 }
-export type rfa = {
+export type RFA = {
     id?: string,
     pat_nat_id?: string,
     pat_id?: string,
@@ -143,7 +143,7 @@ export type rfa = {
     outcome?: string,
     remarks?: string
 }
-export type tace = {
+export type TACE = {
     id?: string,
     pat_nat_id?: string,
     pat_id?: string,
@@ -157,7 +157,7 @@ export type tace = {
     outcome?: string,
     remarks?: string
 }
-export type tumor_markers = {
+export type TUMOR_MARKERS = {
     id?: string,
     pat_nat_id?: string,
     pat_id?: string,
@@ -168,7 +168,7 @@ export type tumor_markers = {
     ca19_9?: number,
     ca_125?: number
 }
-export type ultrasound = {
+export type ULTRASOUND = {
     id?: string,
     pat_nat_id?: string,
     pat_id?: string,
@@ -184,7 +184,7 @@ export type ultrasound = {
     ascites?: string,
     cirrhosis?: string
 }
-export type users = {
+export type USERS = {
     id?: string,
     username?: string,
     fullname?: string,
@@ -193,7 +193,7 @@ export type users = {
     email?: string,
     password?: string
 }
-export type virology = {
+export type VIROLOGY = {
     id?: string,
     pat_nat_id?: string,
     pat_id?: string,
@@ -203,14 +203,104 @@ export type virology = {
     hbv?: string,
     hiv?: string
 }
-export type users_login = {
+export type USERS_LOGIN = {
     id?: string,
     username?: string,
     login_time?: string
 }
-export type patients_visits = {
+export type PATIENTS_VISITS = {
     id?: string,
     pat_nat_id?: string,
     pat_id?: string,
     clinic_id?: string
+}
+export interface REQDATAFILTER {
+    column?: string,
+    value?: string,
+    clinicID?: string
+}
+export interface REQDATAUSER {
+    req_username: string,
+    req_JWT: string
+}
+export interface REQBODY {
+    data: {
+        filter: REQDATAFILTER,
+        user: REQDATAUSER,
+        body: CBC,
+        SQL: SQLquery
+    }
+}
+export interface SQLquery {
+    mainTable?: string,
+    joinTable1?: string,
+    joinTable2?: string,
+    joinTable3?: string,
+    joinTable4?: string,
+    joinTable5?: string,
+    joinTable6?: string,
+    onTable1Column?: string,
+    onTable2Column?: string,
+    onTable3Column?: string,
+    onTable4Column?: string,
+    onTable5Column?: string,
+    onTable6Column?: string,
+    equalTable1Column?: string,
+    equalTable2Column?: string,
+    equalTable3Column?: string,
+    equalTable4Column?: string,
+    equalTable5Column?: string,
+    equalTable6Column?: string,
+}
+export interface CLIINC_PATIENT {
+    basic: {
+        fullname: string,
+        hospital_id?: string,
+        pat_nat_id?: string,
+        mobile?: string[],
+        dob?: string,
+        age?: number,
+        residence?: string,
+        gender?: string,
+        rank?: string,
+        firstvisit?: string,
+        lastvisit?: string,
+        decision?: string,
+        futher?: string[],
+        remarks?: string,
+        radiologist?: string
+    }
+    clinical_data?: CLINICAL_DATA,
+    patient_visits?: PATIENTS_VISITS,
+    clinics?: CLINICS,
+    cbc?: CBC,
+    chemistry?: CHEMISTRY,
+    virology?: VIROLOGY,
+    tumor_markers?: TUMOR_MARKERS,
+    ct?: CT,
+    mri?: MRI,
+    ultrasound?: ULTRASOUND,
+    tace?: TACE,
+    resection?: RESECTION,
+    rfa?: RFA,
+    patient_plan?: PATIENT_PLAN,
+}
+
+const x: REQBODY = {
+    data: {
+        filter: {
+            column: '',
+            value: '',
+        },
+        user: {
+            req_JWT: '',
+            req_username: ''
+        },
+        body: {
+        },
+        SQL: {
+
+        }
+    },
+
 }

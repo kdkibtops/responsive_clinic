@@ -6,6 +6,7 @@ import users_routes from './API/handlers/users_handler';
 import { testDB } from './database'
 import main_routes from "./API/handlers/main_handler";
 import path from 'path';
+import complex_routes from "./API/handlers/complex_handler";
 
 console.log('started');
 const clinicApp = express();
@@ -24,5 +25,5 @@ testDB();
 clinicApp.use(express.static(path.join(__dirname, '../../../Front_end/src/', 'myWebSite')));
 clinicApp.use('/users', users_routes);
 clinicApp.use('/main', main_routes);
-
+clinicApp.use('/complex', complex_routes);
 

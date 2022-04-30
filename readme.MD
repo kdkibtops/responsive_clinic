@@ -1,5 +1,5 @@
-# WEB BASED RESPONSIVE CLINIC APPLICATION:
-## Under development....
+# WEB BASED RESPONSIVE CLINIC APPLICATION: #
+## Under development.... ##
 
 The idea is creating a fully responsive web based application for managing clinic and patients data
 The HTML and CSS codes used so far are used from youtube video for creating fully responsive web page to be compatible with all devices.
@@ -18,7 +18,7 @@ I am intending to use:
   #### Database:
   #### Server:
   #### API:
-  ## Update [28-3-2022]:
+  ## Update [28-3-2022]: ###
   - I succeeded in creating a new models_functions.ts file and main_handler.ts file that will take care of all Database CRUD operations whatever the table being manipulated:
     The request body should be like below:
 ```JSON
@@ -35,37 +35,43 @@ I am intending to use:
 
       } 
 ```
-### Table name will be supplies in the URL as a parameter:
-### The API URLs will be as follow:   
+### Table name will be supplies in the URL as a parameter: ###
+### The API URLs will be as follow: ###  
 
-#### Main Handlers:
+#### Main Handlers: ####
 ```
 /main/:tableName/registerentry 
 ```
+
 ``` 
 /main/:tableName/show  <token requires>
 ```
+
 ``` 
 /main/:tableName/showall  <token requires>
 ```
+
 ``` 
 /main/:tableName/update   <token requires>
 ```
+
 ```
 /main/:tableName/delete   <token requires>
 ```
 
 Token: to be passed as follow:
-````
+```
 Req.headers.authorization (BEARER JWT) 
 
-````
+```
 
-#### User handler:
+#### User handler: ####
   - Create user: POST 
+
 ```
   '/users/create'
 ```
+
     The request.body should look like this:
 
 ```JSON
@@ -82,17 +88,12 @@ Req.headers.authorization (BEARER JWT)
   }
 }        
 ```
+  - Index all users: 
+        Method: 'PATCH' url: /users/index
+  - Show user: 
+        Method: 'GET'   url: /users/show/:username
 
-  - Index all users: PATCH 
-````
-    '/users/index' 
-````
-````
-Req.headers.authorization (BEARER JWT) 
+# Suggested Workflow: #
 
-- Shows user: GET 
-````
-'/users/show/:username'
-````  
-
-
+ Home page is served containing login and register as well as most relevant newsfeed (Still developing).
+#2 

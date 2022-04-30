@@ -20,6 +20,7 @@ async function registerNew(req: express.Request, res: express.Response): Promise
         case 'tace':
         case 'rfa':
         case 'resection':
+        case 'patients_visits':
         case 'patient_plan': {
             proceed = await isPresentInDB('patients_personal', req.body.data.filter.column, req.body.data.filter.value);
             break;
@@ -29,15 +30,25 @@ async function registerNew(req: express.Request, res: express.Response): Promise
             proceed = ! await isPresentInDB('patients_personal', req.body.data.filter.column, req.body.data.filter.value);
             break;
     }
+    console.log(`proceed:${proceed}`);
     if (proceed) {
-        try {
-            const data = await modelsFunctions.createNew(req);
-            res.status(200);
-            res.json(data);
-
-        } catch (error) {
-            throw new Error(`Can't register new data: Handler Level: ${error}`);
+        if (req.params.tableName === 'clinical_data') {
+            let clinicalDataPresent = await isPresentInDB('clinical_data', req.body.data.filter.column, req.body.data.filter.value);
+            if (clinicalDataPresent) {
+                res.status(400);
+                res.json(`This patient has clinical data already registered before, please update instead`);
+            }
+        } else {
+            try {
+                const data = await modelsFunctions.createNew(req);
+                res.status(200);
+                res.json(data);
+            } catch (error) {
+                throw new Error(`Can't register new data: Handler Level: ${error}`);
+            }
         }
+
+
     } else if (!proceed && model_table === 'patients_personal') {
         res.status(400);
         res.json(`Patient is already registered in database`);
@@ -66,6 +77,7 @@ async function showEntry(req: express.Request, res: express.Response): Promise<v
 
 }
 async function showAll(req: express.Request, res: express.Response): Promise<void> {
+    console.log(1);
     const proceed = await isPresentInDB(req.params.tableName, req.body.data.filter.column, req.body.data.filter.value);
     if (proceed) {
         try {
