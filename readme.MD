@@ -88,6 +88,11 @@ Req.headers.authorization (BEARER JWT)
   }
 }        
 ```
+
+Route   |   URL   |   Method
+------- |---------|----------
+Index   |/users/index| PATCH
+
   - Index all users: 
         Method: 'PATCH' url: /users/index
   - Show user: 
