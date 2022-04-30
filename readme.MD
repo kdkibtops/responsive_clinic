@@ -96,7 +96,44 @@ Show user| ```/users/show/:username```| GET
 
 # Suggested Workflow: #
 
-1. [ ] Home page is served containing login and register as well as most relevant newsfeed (Still developing).
-2. [x] User registers and then signs in to account.
-3. [ ] After sign in JWT is passed to the user
-4. [ ] The user passes JWT with Req.headers.authorization
+[ ] Home page is served containing login and register as well as most relevant newsfeed (Still developing).
+[x] User registers and then signs in to account.
+[x] After sign in JWT is passed to the user.
+[x] The user passes JWT with Req.headers.authorization.
+[ ] Registered homepage with have the following:
+  - Patients:
+    - Add new patient
+    - Browse all patients (patients summary)
+    - Show a patient:
+      - Summary:
+        __Fullname, Age, National_id, Residence, Contacts, Rank, Last_visit, Furthers, Decision, Next_visit__
+      - Personal data:
+        __Date of birth, Hospital_id, Gender__
+      - Clinical data:
+        __DM, HTN, HCV, HBV, HIV, CKD, Disability, Cardiac__
+      - Laboratory:
+        - CBC: __Hb, TLC, Platelets, INR__
+        - Chemistry: __All__
+        - Virology: __All__
+        - Tumor markers: __All__
+      - Imaging:
+        - Ultrasound: __All__
+        - CT: __All__
+        - MRI: __All__
+      - Interventions:
+        - TACE: __All__
+        - RFA: __All__
+        - Resection: __All__
+      - Patient Plan:
+        __Decision, Furthers, Radiologist, Remarks__
+    - Edit a patient: Each table to be edited separtely according to data updated.
+    - Delete a patient
+    - Browse patients with filters
+    - Add patient to a clinic: will use `patients_visits` router
+  - Clinics: 
+    - Add new clinic
+    - Browse all clinics (clinic summary)
+    - Show a clinic: __Date, Attending physician, Number of patient__
+    - Edit a clinic: __Date, Attending_phsyician__
+    - Delete a clinic
+  - Newsfeed
