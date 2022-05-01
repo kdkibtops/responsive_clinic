@@ -3,6 +3,7 @@ import * as SQLqueries from '../../helpers/createSQLString';
 import client from "../../database";
 import exrpess from 'express';
 import { CBC, MRI, USERS, PATIENT_PLAN, PATIENTS_PERSONAL, PATIENTS_VISITS, RESECTION, RFA, TACE, TUMOR_MARKERS, ULTRASOUND, USERS_LOGIN, CHEMISTRY, CLINICAL_DATA, CLINICS, CT, VIROLOGY } from '../../config/clinicTypes'
+import * as clinicTypes from '../../config/clinicTypes';
 
 
 export async function createNew(req: exrpess.Request): Promise<CBC | MRI | USERS | PATIENT_PLAN | PATIENTS_PERSONAL | PATIENTS_VISITS | RESECTION | RFA | TACE | TUMOR_MARKERS | ULTRASOUND | USERS_LOGIN | CHEMISTRY | CLINICAL_DATA | CLINICS | CT | VIROLOGY> {
@@ -77,11 +78,14 @@ export async function showAll(req: exrpess.Request, filter: boolean): Promise<CB
 
     }
 }
-export async function update(req: exrpess.Request): Promise<CBC | MRI | USERS | PATIENT_PLAN | PATIENTS_PERSONAL | PATIENTS_VISITS | RESECTION | RFA | TACE | TUMOR_MARKERS | ULTRASOUND | USERS_LOGIN | CHEMISTRY | CLINICAL_DATA | CLINICS | CT | VIROLOGY> {
+export async function update(req: exrpess.Request, notIntended?: boolean): Promise<CBC | MRI | USERS | PATIENT_PLAN | PATIENTS_PERSONAL | PATIENTS_VISITS | RESECTION | RFA | TACE | TUMOR_MARKERS | ULTRASOUND | USERS_LOGIN | CHEMISTRY | CLINICAL_DATA | CLINICS | CT | VIROLOGY> {
+    if (notIntended) {
+        console.log('not intended')
+    }
     try {
         let enteries: string[] = [];
         let columnNames: string[] = [];
-        const requestBody = req.body.data.body;
+        const requestBody = req.body.data.body.data;
         const filter = req.body.data.filter;
         for (const value in requestBody) {
             if (value !== 'filterColumn' && value !== 'filterValue') {
@@ -91,6 +95,7 @@ export async function update(req: exrpess.Request): Promise<CBC | MRI | USERS | 
         }
         const conn = await client.connect();
         const SQL = SQLqueries.createSQLupdate(req.params.tableName, columnNames, enteries, filter.column, filter.value)
+        console.log(SQL);
         const response = await conn.query(SQL);
         conn.release();
         const result = response.rows[0];
@@ -116,4 +121,16 @@ export async function deleteEntry(req: exrpess.Request): Promise<CBC | MRI | USE
     }
 }
 
-
+// to be used only while creating new user from scratch
+export async function createNewUser(req: clinicTypes.REQBODY) {
+    try {
+        const SQLarr = clinicTypes.iterateThroughReqBody(req);
+        const conn = await client.connect();
+        for (let i = 0; i < SQLarr.length; i++) {
+            const result = await conn.query(SQLarr[i]);
+        }
+        conn.release();
+    } catch (err) {
+        throw new Error(`${err}`);
+    }
+}

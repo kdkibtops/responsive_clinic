@@ -229,7 +229,6 @@ export interface REQBODY {
         body: CBC
     }
 }
-
 const x: REQBODY = {
     data: {
         filter: {
@@ -245,7 +244,6 @@ const x: REQBODY = {
     },
 
 }
-
 export type User = {
     id?: string,
     fullname: string,

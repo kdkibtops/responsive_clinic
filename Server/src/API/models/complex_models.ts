@@ -1,14 +1,14 @@
 import * as SQLqueries from '../../helpers/createSQLString';
 import client from "../../database";
 import { Request, Response } from 'express';
-import { CLIINC_PATIENT } from '../../config/clinicTypes';
+import { CLIINC_PATIENT, getDobAgeGender } from '../../config/clinicTypes';
 
 export async function getClinicPatients(req: Request, res: Response) {
     try {
         const conn = await client.connect();
         const SQL = `SELECT * FROM patients_personal 
         JOIN patients_visits ON patients_personal.pat_nat_id = patients_visits.pat_nat_id
-        JOIN clinics on CAST(patients_visits.clinic_id as INTEGER)= clinics.id
+        JOIN clinics ON CAST(patients_visits.clinic_id as INTEGER)= clinics.id
         WHERE clinics.id = ${req.params.clinicID};`;
         const response = await conn.query(SQL);
         const result = response.rows;
@@ -28,7 +28,7 @@ export async function getClinicPatients(req: Request, res: Response) {
                 _age = Math.floor((dobDiff / (1000 * 3600 * 24)) / 365);
             }
             const retrPatient: CLIINC_PATIENT = {
-                basic: {
+                response_summary: {
                     fullname: pat_fullname || 'NA',
                     hospital_id: dataToAdd.hospital_id || 'NA',
                     pat_nat_id: dataToAdd.pat_nat_id || 'NA',
@@ -45,6 +45,7 @@ export async function getClinicPatients(req: Request, res: Response) {
                     remarks: dataToAdd.remarks || 'NA',
                     radiologist: dataToAdd.radiologist || 'NA'
                 },
+                patients_personal: {},
                 cbc: {},
                 chemistry: {},
                 clinics: {},
@@ -72,7 +73,15 @@ export async function getClinicPatients(req: Request, res: Response) {
 export async function getPatientVisits(req: Request, res: Response, lastVisitOnly?: boolean) {
     try {
         const conn = await client.connect();
-        const SQL = ` `
+        const SQL = `SELECT clinics.date,
+        patients_personal.firstname, patients_personal.middlename, patients_personal.lastname, patients_personal.lastvisit,
+        patient_plan.decision, patient_plan.further, patient_plan.remarks, users.fullname AS decision_radiologist
+        FROM patients_visits
+        JOIN clinics ON clinics.id = CAST (patients_visits.clinic_id AS INTEGER)
+        JOIN patients_personal ON patients_personal.pat_nat_id = patients_visits.pat_nat_id
+        JOIN patient_plan ON patients_personal.pat_nat_id = patient_plan.pat_nat_id
+        JOIN users ON users.id = CAST (clinics.attending_phys AS INTEGER)
+        WHERE patients_visits.${req.body.data.filter.column} = '${req.body.data.filter.value}' `
         const response = await conn.query(SQL);
         const result = response.rows;
         return result;

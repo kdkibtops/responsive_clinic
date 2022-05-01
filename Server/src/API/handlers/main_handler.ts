@@ -8,6 +8,12 @@ const main_routes = express.Router();
 async function registerNew(req: express.Request, res: express.Response): Promise<void> {
     let proceed: boolean = true;
     const model_table = req.params.tableName;
+
+    req.body.data.filter.column = 'pat_nat_id';
+    req.body.data.filter.value = req.body.data.body.data.pat_nat_id;
+    console.log(`column: ${req.body.data.filter.column}`);
+    console.log(`value: ${req.body.data.filter.value}`);
+    console.log(req.body);
     switch (model_table) {
         case 'clinical_data':
         case 'cbc':
@@ -33,10 +39,13 @@ async function registerNew(req: express.Request, res: express.Response): Promise
     console.log(`proceed:${proceed}`);
     if (proceed) {
         if (req.params.tableName === 'clinical_data') {
+
             let clinicalDataPresent = await isPresentInDB('clinical_data', req.body.data.filter.column, req.body.data.filter.value);
             if (clinicalDataPresent) {
-                res.status(400);
-                res.json(`This patient has clinical data already registered before, please update instead`);
+                await modelsFunctions.update(req, true);
+                console.log(`updated clinical data`);
+                res.status(200);
+                res.json(`updated clinical data`);
             }
         } else {
             try {
@@ -149,14 +158,25 @@ async function deleteEntry(req: express.Request, res: express.Response): Promise
         res.json(`Requested data is not found`);
     }
 }
+// to be used only while creating new user from scratch
+async function registerNewPatient(req: express.Request, res: express.Response): Promise<void> {
+    try {
+        await modelsFunctions.createNewUser(req.body);
+        res.status(200);
+        res.json(`Registered new patient successfully`);
+    } catch (error) {
+        throw new Error(`Can't register patient: Handler Level : ${error}`);
+    }
+}
 
 
-
-main_routes.post('/:tableName/registerentry', registerNew);
+main_routes.post('/:tableName/registerentry', verifyToken, registerNew);
 main_routes.patch('/:tableName/showone', verifyToken, showEntry);
 main_routes.patch('/:tableName/showall', verifyToken, showAll);
 main_routes.put('/:tableName/update', verifyToken, update);
 main_routes.delete('/:tableName/delete', verifyToken, deleteEntry);
+main_routes.post('/registerpatient', verifyToken, registerNewPatient);
+
 
 
 

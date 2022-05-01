@@ -1,3 +1,5 @@
+import * as SQLqueries from '../helpers/createSQLString';
+
 export type CBC = {
     id?: string,
     pat_nat_id?: string,
@@ -80,7 +82,7 @@ export type MRI = {
     hfl_number?: string,
     hfl_lobe?: string,
     hfl_segment?: string,
-    size?: string,
+    size?: number,
     aphe?: string,
     washout?: string,
     capsule?: string,
@@ -176,7 +178,7 @@ export type ULTRASOUND = {
     center?: string,
     radiologist?: string,
     hfl_number?: string,
-    lobe?: string,
+    hfl_lobe?: string,
     hfl_segment?: string,
     mpv?: string,
     rpv?: string,
@@ -214,24 +216,41 @@ export type PATIENTS_VISITS = {
     pat_id?: string,
     clinic_id?: string
 }
-export interface REQDATAFILTER {
+export type REQDATAFILTER = {
     column?: string,
     value?: string,
     clinicID?: string
 }
-export interface REQDATAUSER {
+export type REQDATAUSER = {
     req_username: string,
     req_JWT: string
 }
-export interface REQBODY {
+export type REQBODY = {
     data: {
         filter: REQDATAFILTER,
         user: REQDATAUSER,
-        body: CBC,
+        body: {
+            cbc?: CBC,
+            mri?: MRI,
+            patient_plan?: PATIENT_PLAN,
+            patients_personal?: PATIENTS_PERSONAL,
+            patients_visits?: PATIENTS_VISITS,
+            resection?: RESECTION,
+            rfa?: RFA,
+            tace?: TACE,
+            tumor_markers?: TUMOR_MARKERS,
+            ultrasound?: ULTRASOUND,
+            users_login?: USERS_LOGIN,
+            chemistry?: CHEMISTRY,
+            clinical_data?: CLINICAL_DATA,
+            clinics?: CLINICS,
+            ct?: CT,
+            virology?: VIROLOGY
+        },
         SQL: SQLquery
     }
 }
-export interface SQLquery {
+export type SQLquery = {
     mainTable?: string,
     joinTable1?: string,
     joinTable2?: string,
@@ -252,8 +271,8 @@ export interface SQLquery {
     equalTable5Column?: string,
     equalTable6Column?: string,
 }
-export interface CLIINC_PATIENT {
-    basic: {
+export type CLIINC_PATIENT = {
+    response_summary?: {
         fullname: string,
         hospital_id?: string,
         pat_nat_id?: string,
@@ -269,6 +288,20 @@ export interface CLIINC_PATIENT {
         futher?: string[],
         remarks?: string,
         radiologist?: string
+    },
+    patients_personal?: {
+        firstname?: string,
+        middlename?: string,
+        lastname?: string,
+        hospital_id?: string,
+        pat_nat_id?: string,
+        mobile?: string[],
+        dob?: string,
+        residence?: string,
+        gender?: string,
+        rank?: string,
+        firstvisit?: string,
+        lastvisit?: string,
     }
     clinical_data?: CLINICAL_DATA,
     patient_visits?: PATIENTS_VISITS,
@@ -285,7 +318,83 @@ export interface CLIINC_PATIENT {
     rfa?: RFA,
     patient_plan?: PATIENT_PLAN,
 }
+export type DOB_AGE_GENDER = {
+    DOB: string,
+    GENDER: string,
+    AGE: string
+}
+export function getDobAgeGender(pat_nat_id: string): DOB_AGE_GENDER {
+    let century: string;
+    if (Number(pat_nat_id.slice(0, 1)) === 2) {
+        century = '19';
+    } else if (Number(pat_nat_id.slice(0, 1)) === 3) {
+        century = '20';
+    } else {
+        century = '';
+    }
+    const dob = pat_nat_id.slice(3, 5) + '-' + pat_nat_id.slice(5, 7) + '-' + century + pat_nat_id.slice(1, 3)
+    const gender = (((Number(pat_nat_id.slice(-1))) % 2) === 0) ? 'female' : 'male';
+    const dobDiff = Math.abs(Date.now() - Date.parse(dob));
+    const age = Math.floor((dobDiff / (1000 * 3600 * 24)) / 365);
+    const result: DOB_AGE_GENDER = {
+        DOB: dob,
+        GENDER: gender,
+        AGE: String(age)
+    }
 
+    return result;
+}
+// this function iterates through the given request to create SQL queries
+// return value is an array through which you can pass each index in a SQL query
+export function iterateThroughReqBody(reqBody: REQBODY): string[] {
+    let tableNames: string[] = []
+    let SQLarr: string[] = []
+    const reqData = reqBody.data.body
+    for (const prop in reqData) {
+        tableNames.push(prop);
+    }
+    for (let i = 0; i < tableNames.length; i++) {
+        const tableName = tableNames[i];
+        let enteries: string[] = [];
+        let columnNames: string[] = [];
+        let thisTable = reqData[tableName as keyof typeof reqData]
+        for (const column in thisTable) {
+            columnNames.push(column);
+            enteries.push(String(thisTable[column as keyof typeof thisTable]));
+        }
+        const SQL = SQLqueries.createSQLinsert(tableName, columnNames, enteries);
+        SQLarr.push(SQL)
+    }
+    return SQLarr;
+}
+
+
+/*
+
+const d = getDobAgeGender('28912142102773');
+const arr = ['DOB', 'GENDER', 'AGE']
+
+arr.forEach(element => {
+    console.log(d[element as keyof typeof d])
+});
+
+for (const val in d) {
+    console.log(val);
+    console.log(d[val as keyof typeof d])
+}
+console.log(d[arr[0] as keyof DOB_AGE_GENDER])
+console.log(d[arr[1] as keyof typeof d])
+
+
+console.log(tableNames)
+const x3 = tableNames[0]
+const personalDATA = reqData[x3 as keyof typeof reqData] ;
+const toPrint = personalDATA!['residence' as keyof typeof personalDATA] || 'da'
+
+console.log(toPrint)
+*/
+
+/*
 const x: REQBODY = {
     data: {
         filter: {
@@ -304,3 +413,39 @@ const x: REQBODY = {
     },
 
 }
+
+/**const patient: CLIINC_PATIENT = {
+    response_summary: {
+        fullname: '',
+    },
+    patients_personal: {
+        firstname: 'Ahmed',
+        middlename: 'Mohammed',
+        lastname: 'Zidan',
+        hospital_id: '1_244',
+        pat_nat_id: '26010122103773',
+        dob: '',
+        residence: 'Cairo',
+        gender: 'Male',
+        rank: 'Civilian',
+        firstvisit: '10-2-2021',
+        lastvisit: '03-19-2022'
+    },
+    clinical_data: {
+
+    },
+    patient_visits: {},
+    clinics: {},
+    cbc: {},
+    chemistry: {},
+    virology: {},
+    tumor_markers: {},
+    ct: {},
+    mri: {},
+    ultrasound: {},
+    tace: {},
+    resection: {},
+    rfa: {},
+    patient_plan: {},
+
+} */

@@ -1,15 +1,15 @@
 /* eslint-disable */
+import { User } from '../scripts/config/clinicTypes.js';
 import { signIn, getData } from './front_helper_functions.js';
 let goodtogo = false;
 let JWT = '';
-import * as clinicTypes from './config/clinicTypes';
 
 // SUBMIT REGISTERATION FUNCTION, IT RUNS ALL REQUIRED FUNCTIONS (Master function)
 async function submit() {
     const formComplete = checkEmptyFields();
     if (formComplete) {
         try {
-            const newUser: clinicTypes.REQBODY = { data: { body: getUserInput() } };
+            const newUser = { data: { body: getUserInput() } };
             const signedIn = await signIn('/users/authentication', newUser);
             if (signedIn.status === 200) {
                 const reqBody = {
@@ -136,7 +136,7 @@ function createUserTable() {
 
 }
 // remove buttons and forms and add logged in as username
-function resetPage(username) {
+function resetPage(username: string) {
     const mainDiv = document.getElementById('mainDiv')
     const formdata = document.getElementById('formdata')
     const signInbutton = document.getElementById('signInButton')
@@ -151,7 +151,7 @@ function resetPage(username) {
     formButtonDiv.remove();
 }
 // add user data in the table
-function showUserInTable(user) {
+function showUserInTable(user: User) {
     // create new row for the patient
     const tableBody = document.getElementById('tableBody');
     const userRow = document.createElement('tr');
@@ -172,10 +172,10 @@ function showUserInTable(user) {
     userRow.appendChild(emailCell);
 
     // fill the patient row from the form
-    idCell.innerText = user.id;
+    idCell.innerText = user.id || 'NA';
     fullnameCell.textContent = user.fullname;
     usernameCell.textContent = user.username;
-    degreeCell.textContent = user.degree;
+    degreeCell.textContent = user.degree || 'NA';
     roleCell.textContent = user.role;
     emailCell.textContent = user.email;
 
