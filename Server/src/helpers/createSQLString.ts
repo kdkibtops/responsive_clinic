@@ -29,8 +29,12 @@ export function createSQLupdate(tableName: string, columnsName: string[], entrie
     });
     columns = columns.slice(0, -1);
     values = values.slice(0, -1);
-
-    let SQL = `UPDATE ${tableName} SET (${columnsName})=(${values}) WHERE ${filterColumn} = '${filterValue}' RETURNING *`;
+    let SQL:string = ''
+    if (columnsName.length === 1){
+      SQL = `UPDATE ${tableName} SET ${columnsName}=${values} WHERE ${filterColumn} = '${filterValue}' RETURNING *`;
+    }else{
+      SQL = `UPDATE ${tableName} SET (${columnsName})=(${values}) WHERE ${filterColumn} = '${filterValue}' RETURNING *`;
+    }
     return SQL;
 }
 
@@ -75,7 +79,7 @@ export function createSQLshowAll(tableName: string, columnsNeeded: string[], fil
 // if you want all columns enter '*' instead of columnsNeeded
 // if you want columns name to be changes enter the required values in order as optional argument asColumnName
 // But if you used optinal argument asColumnName, number of columns in both arguments must be equal
-export function createSQLshowOneOnly(tableName: string, filterColumn: string, filterValue: string, columnsNeeded: string[], asColumnsName?: string[]): string {
+export function createSQLshowOneOnly(tableName: string, filterColumn: string, filterValue: string, columnsNeeded: string[],orderBy:string, asColumnsName?: string[]): string {
     let columns = ``;
     let SQL = ``;
     if (asColumnsName) {
@@ -97,7 +101,6 @@ export function createSQLshowOneOnly(tableName: string, filterColumn: string, fi
         columns = columns.slice(0, -1);
         SQL = `SELECT ${columns} FROM ${tableName}`;
     }
-    SQL += ` WHERE ${filterColumn}='${filterValue}';`
+    SQL += ` WHERE ${filterColumn}='${filterValue}' ORDER BY ${orderBy} DESC LIMIT 1;`
     return SQL;
 };
-

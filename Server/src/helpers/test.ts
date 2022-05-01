@@ -90,4 +90,6 @@ console.log(DOB)
 
 */
 
+const arr = ['a', 'b', 'c'];
 
+console.log(arr.indexOf('a'));

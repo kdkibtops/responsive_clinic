@@ -217,8 +217,9 @@ export type PATIENTS_VISITS = {
     clinic_id?: string
 }
 export type REQDATAFILTER = {
-    column?: string,
-    value?: string,
+    column: string,
+    value: string,
+    orderBy?:string,
     clinicID?: string
 }
 export type REQDATAUSER = {

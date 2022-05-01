@@ -180,3 +180,31 @@ const newRequest: clinicTypes.REQBODY = {
     }
 }
 
+// exmple for the request.body sent to backend while requesting any other route
+// Note that table name is sent as URL param: /main/:tableName/whateverYouWantToDo
+const reqBodyOthers: clinicTypes.REQBODY = {
+    data: {
+        body: {
+            patient_plan: {
+                pat_nat_id: myNAT,
+                pat_id: pat_ID,
+                plan_setting: 'inpatient',
+                date: invDate,
+                decision: 'Pending',
+                remarks: 'Remarks',
+                radiologist: 'Mustafa Heidar'
+            }
+        },
+        filter: {
+            column: 'pat_nat_id',
+            value: '28912142102773'
+        },
+        user: {
+            req_username: '',
+            req_JWT: ''
+        },
+        SQL: {
+
+        }
+    }
+}
