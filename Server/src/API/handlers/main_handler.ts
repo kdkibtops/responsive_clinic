@@ -2,6 +2,7 @@ import * as modelsFunctions from '../models/main_models_functions'
 import express from 'express';
 import { isPresentInDB } from '../../helpers/helper_functions';
 import { verifyToken, verifyUser } from '../service/main_authentication';
+import * as clinicTypes from '../../config/clinicTypes';
 
 const main_routes = express.Router();
 
@@ -86,17 +87,23 @@ async function showEntry(req: express.Request, res: express.Response): Promise<v
 
 // Pending Debug
 async function showAll(req: express.Request, res: express.Response): Promise<void> {
-    console.log(1);
-    const proceed = await isPresentInDB(req.params.tableName, req.body.data.filter.column, req.body.data.filter.value);
+    const reqBody = req.body as clinicTypes.REQBODY;
+    if (req.params.tableName === 'users') {
+        reqBody.data.filter.column = 'username'
+        reqBody.data.filter.value = reqBody.data.user.req_username;
+    }
+    console.log(reqBody.data.filter.column)
+    console.log(reqBody.data.filter.value)
+    const proceed = await isPresentInDB(req.params.tableName, reqBody.data.filter.column, reqBody.data.filter.value);
     if (proceed) {
         try {
             let filtering = false;
             switch (req.params.tableName) {
                 case 'users':
-                case 'patients_personal':
-                case 'clinics':
                     filtering = false;
                     break;
+                case 'patients_personal':
+                case 'clinics':
                 case 'cbc':
                 case ' mri':
                 case 'patient_plan':
@@ -116,7 +123,7 @@ async function showAll(req: express.Request, res: express.Response): Promise<voi
 
             }
             console.log(`Filtering: ${filtering}`);
-            const data = await modelsFunctions.showAll(req, filtering);
+            const data = await modelsFunctions.showAll(req.params.tableName, req.body, filtering);
             res.status(200);
             res.json(data);
         } catch (error) {

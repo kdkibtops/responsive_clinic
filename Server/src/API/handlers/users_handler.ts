@@ -1,6 +1,8 @@
 import { User, users } from "../models/users";
 import express from "express";
 import { authenticateUser, getDataFromToken, passwordHashing, verifyToken, verifyUser } from "../service/main_authentication";
+import * as clinicTypes from '../../config/clinicTypes';
+
 
 const _user_ = new users();
 const users_routes = express.Router();
@@ -80,11 +82,12 @@ async function createUser(req: express.Request, res: express.Response): Promise<
 }
 async function deleteUser(req: express.Request, res: express.Response): Promise<void> {
     try {
-        const verification = await verifyUser(req.body.req_username);
+        const reqBody = req.body as clinicTypes.REQBODY;
+        const verification = await verifyUser(reqBody.data.user.req_username);
         if (verification === null) {
-            res.json(`Verification failed, Username ${req.body.req_username} is not found in database`);
+            res.json(`Verification failed, Username ${reqBody.data.user.req_username} is not found in database`);
         } else if (verification === true) {
-            const users__ = await _user_.deleteUser(req.body.username);
+            const users__ = await _user_.deleteUser(reqBody.data.body.users!.username || 'nothingToDelete');
             res.json(users__);
         } else if (verification === false) {
             res.json(`User verification failed`);
@@ -95,17 +98,26 @@ async function deleteUser(req: express.Request, res: express.Response): Promise<
 }
 async function updateUser(req: express.Request, res: express.Response): Promise<void> {
     try {
-        const verification = await verifyUser(req.body.req_username);
+        const reqBody = req.body as clinicTypes.REQBODY;
+        const verification = await verifyUser(reqBody.data.user.req_username);
         if (verification === null) {
-            res.json(`Verification failed, Username ${req.body.req_username} is not found in database`);
+            res.json(`Verification failed, Username ${reqBody.data.user.req_username} is not found in database`);
         } else if (verification === true) {
-            const users__ = await _user_.updateUser(req.body.username, req.body.updateField, req.body.updateValue);
-            res.json(users__);
+            const usernameToUpdate = reqBody.data.body.updating_user?.username || 'nothing';
+            const updateField = reqBody.data.body.updating_user?.updateField || 'nothing';
+            const updateValue = reqBody.data.body.updating_user?.updateValue || 'nothing';
+            if (usernameToUpdate === 'nothing' || updateField === 'nothing' || updateValue === 'nothing') {
+                res.status(400);
+                res.json('No update data provided, please check your request');
+            } else {
+                const users__ = await _user_.updateUser(usernameToUpdate, updateField, updateValue);
+                res.json(users__);
+            }
         } else if (verification === false) {
             res.json(`User verification failed`);
         }
     } catch (error) {
-        throw new Error(`!Error at handler level!, Can't retrieve data: ${error}`);
+        throw new Error(`!Error at handler level!, Can't update data: ${error}`);
     }
 }
 const welcome = async (

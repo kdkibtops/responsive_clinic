@@ -219,7 +219,7 @@ export type PATIENTS_VISITS = {
 export type REQDATAFILTER = {
     column: string,
     value: string,
-    orderBy?:string,
+    orderBy?: string,
     clinicID?: string
 }
 export type REQDATAUSER = {
@@ -246,7 +246,9 @@ export type REQBODY = {
             clinical_data?: CLINICAL_DATA,
             clinics?: CLINICS,
             ct?: CT,
-            virology?: VIROLOGY
+            virology?: VIROLOGY,
+            users?: USERS,
+            updating_user?: UPDATING_USER
         },
         SQL: SQLquery
     }
@@ -271,6 +273,11 @@ export type SQLquery = {
     equalTable4Column?: string,
     equalTable5Column?: string,
     equalTable6Column?: string,
+}
+export type UPDATING_USER = {
+    updateField: string,
+    updateValue: string,
+    username: string
 }
 export type CLIINC_PATIENT = {
     response_summary?: {

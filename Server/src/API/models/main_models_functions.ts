@@ -51,21 +51,20 @@ export async function showOne(tableName: string, reqBody: clinicTypes.REQBODY): 
 
 // Pending Debug
 // filter is used to determine whether the caller handler will need filter or not
-export async function showAll(req: exrpess.Request, filter: boolean): Promise<CBC[] | MRI[] | USERS[] | PATIENT_PLAN[] | PATIENTS_PERSONAL[] | PATIENTS_VISITS[] | RESECTION[] | RFA[] | TACE[] | TUMOR_MARKERS[] | ULTRASOUND[] | USERS_LOGIN[] | CHEMISTRY[] | CLINICAL_DATA[] | CLINICS[] | CT[] | VIROLOGY[]> {
+export async function showAll(tableName: string, reqBody: clinicTypes.REQBODY, filtering: boolean): Promise<CBC[] | MRI[] | USERS[] | PATIENT_PLAN[] | PATIENTS_PERSONAL[] | PATIENTS_VISITS[] | RESECTION[] | RFA[] | TACE[] | TUMOR_MARKERS[] | ULTRASOUND[] | USERS_LOGIN[] | CHEMISTRY[] | CLINICAL_DATA[] | CLINICS[] | CT[] | VIROLOGY[]> {
     try {
         const conn = await client.connect();
-        let columnsName: string[] = [];
+        let columnsNames: string[] = [];
+        const lastBody = reqBody.data.body[tableName as keyof typeof reqBody.data.body];
         let SQL: string = '';
-        for (const value in req.body.data.body) {
-            if (value !== 'filterColumn' && value !== 'filterValue') {
-                columnsName.push(value);
-            }
+        for (const value in lastBody) {
+            columnsNames.push(value);
         }
-        const filter_data = req.body.data.filter;
-        if (filter) {
-            SQL = SQLqueries.createSQLshowAll(req.params.tableName, columnsName, [`${filter_data.column}`, `${filter_data.value}`]);
+        const filter = reqBody.data.filter;
+        if (filtering) {
+            SQL = SQLqueries.createSQLshowAll(tableName, columnsNames, [`${filter.column}`, `${filter.value}`]);
         } else {
-            SQL = SQLqueries.createSQLshowAll(req.params.tableName, columnsName);
+            SQL = SQLqueries.createSQLshowAll(tableName, columnsNames);
         }
         console.log(SQL);
         const response = await conn.query(SQL);

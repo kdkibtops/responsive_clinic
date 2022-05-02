@@ -1,6 +1,5 @@
 import * as clinicTypes from '../../config/clinicTypes'
 
-
 // example for the request.body sent from frontend to backend while creating new user from scratch
 const myNAT = '26004142102773';
 const pat_ID = '1_985332'
