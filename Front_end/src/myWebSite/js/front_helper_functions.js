@@ -1,9 +1,11 @@
 // THIS JS MODULE WILL BE USED TO EXPORT ALL FUNCTIONS THAT AN BE USED BY MULTIPLE PAGES TO AVOID REPEATING CODE
 
 // routes to create user route
-export async function registerNewUser(url, newUser) {
+export async function registerNewUser(hostURL, newUser) {
     try {
         const data = JSON.stringify(newUser);
+        const url = 'http://127.0.0.1:8000' + hostURL;
+        console.log(url);
         const response = await fetch(url, {
             method: 'POST',
             credentials: 'same-origin',

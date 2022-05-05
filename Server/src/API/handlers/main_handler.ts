@@ -10,8 +10,10 @@ const main_routes = express.Router();
 async function registerNew(req: express.Request, res: express.Response): Promise<void> {
     let proceed: boolean = true;
     const model_table = req.params.tableName;
-    if (req.body.data.filter.column === 'pat_nat_id') {
-        req.body.data.filter.value = req.body.data.body[model_table].pat_nat_id;
+    console.log(model_table)
+    const reqBody = req.body as clinicTypes.REQBODY
+    if (reqBody.data.filter.column === 'pat_nat_id') {
+        reqBody.data.filter.value = req.body.data.body[model_table].pat_nat_id
     }
     switch (model_table) {
         case 'clinical_data':
@@ -27,29 +29,29 @@ async function registerNew(req: express.Request, res: express.Response): Promise
         case 'resection':
         case 'patients_visits':
         case 'patient_plan': {
-            proceed = await isPresentInDB('patients_personal', req.body.data.filter.column, req.body.data.filter.value);
+            proceed = await isPresentInDB('patients_personal', reqBody.data.filter.column, reqBody.data.filter.value);
             break;
         }
         // checks if patiet is already present in DB
         case 'patients_personal':
-            proceed = ! await isPresentInDB('patients_personal', req.body.data.filter.column, req.body.data.filter.value);
+            proceed = ! await isPresentInDB('patients_personal', reqBody.data.filter.column, reqBody.data.filter.value);
             break;
     }
     console.log(`proceed:${proceed}`);
     if (proceed) {
         if (req.params.tableName === 'clinical_data') {
 
-            let clinicalDataPresent = await isPresentInDB('clinical_data', req.body.data.filter.column, req.body.data.filter.value);
+            let clinicalDataPresent = await isPresentInDB('clinical_data', reqBody.data.filter.column, reqBody.data.filter.value);
             if (clinicalDataPresent) {
                 // I should add warning message to user asking for permission to update data
-                await modelsFunctions.update(req.params.tableName, req.body, true);
+                await modelsFunctions.update(req.params.tableName, reqBody, true);
                 console.log(`updated clinical data`);
                 res.status(200);
                 res.json(`updated clinical data`);
             }
         } else {
             try {
-                const data = await modelsFunctions.createNew(req.params.tableName, req.body);
+                const data = await modelsFunctions.createNew(req.params.tableName, reqBody);
                 res.status(200);
                 res.json(data);
             } catch (error) {
@@ -68,11 +70,12 @@ async function registerNew(req: express.Request, res: express.Response): Promise
 }
 //Debugged
 async function showEntry(req: express.Request, res: express.Response): Promise<void> {
-    const proceed = await isPresentInDB(req.params.tableName, req.body.data.filter.column, req.body.data.filter.value);
+    const reqBody = req.body as clinicTypes.REQBODY
+    const proceed = await isPresentInDB(req.params.tableName, reqBody.data.filter.column, reqBody.data.filter.value);
     console.log(proceed);
     if (proceed) {
         try {
-            const data = await modelsFunctions.showOne(req.params.tableName, req.body);
+            const data = await modelsFunctions.showOne(req.params.tableName, reqBody);
             res.status(200);
             res.json(data);
         } catch (error) {
@@ -87,22 +90,22 @@ async function showEntry(req: express.Request, res: express.Response): Promise<v
 
 // Pending Debug
 async function showAll(req: express.Request, res: express.Response): Promise<void> {
-    const reqBody = req.body as clinicTypes.REQBODY;
+    const reqBody = req.body as clinicTypes.REQBODY
     if (req.params.tableName === 'users') {
         reqBody.data.filter.column = 'username'
         reqBody.data.filter.value = reqBody.data.user.req_username;
     }
-    console.log(reqBody.data.filter.column)
-    console.log(reqBody.data.filter.value)
-    const proceed = await isPresentInDB(req.params.tableName, reqBody.data.filter.column, reqBody.data.filter.value);
+
+    // const proceed = await isPresentInDB(req.params.tableName, reqBody.data.filter.column, reqBody.data.filter.value);
+    const proceed = true;
     if (proceed) {
         try {
             let filtering = false;
             switch (req.params.tableName) {
                 case 'users':
+                case 'patients_personal':
                     filtering = false;
                     break;
-                case 'patients_personal':
                 case 'clinics':
                 case 'cbc':
                 case ' mri':
@@ -123,7 +126,7 @@ async function showAll(req: express.Request, res: express.Response): Promise<voi
 
             }
             console.log(`Filtering: ${filtering}`);
-            const data = await modelsFunctions.showAll(req.params.tableName, req.body, filtering);
+            const data = await modelsFunctions.showAll(req.params.tableName, reqBody, filtering);
             res.status(200);
             res.json(data);
         } catch (error) {
@@ -136,10 +139,11 @@ async function showAll(req: express.Request, res: express.Response): Promise<voi
 }
 //Debugged
 async function update(req: express.Request, res: express.Response): Promise<void> {
-    const proceed = await isPresentInDB(req.params.tableName, req.body.data.filter.column, req.body.data.filter.value);
+    const reqBody = req.body as clinicTypes.REQBODY
+    const proceed = await isPresentInDB(req.params.tableName, reqBody.data.filter.column, reqBody.data.filter.value);
     if (proceed) {
         try {
-            const data = await modelsFunctions.update(req.params.tableName, req.body);
+            const data = await modelsFunctions.update(req.params.tableName, reqBody);
             res.status(200);
             res.json(data);
 
@@ -153,18 +157,19 @@ async function update(req: express.Request, res: express.Response): Promise<void
 }
 //Debugged
 async function deleteEntry(req: express.Request, res: express.Response): Promise<void> {
+    const reqBody = req.body as clinicTypes.REQBODY
     const model_table = req.params.tableName;
-    if (req.body.data.filter.column === 'pat_nat_id') {
+    if (reqBody.data.filter.column === 'pat_nat_id') {
         // I should add warning message to user confirming to delete all enteries associated with pat_nat_id in the table
-        req.body.data.filter.value = req.body.data.body[model_table].pat_nat_id;
-    } else if (req.body.data.filter.column === '') {
+        reqBody.data.filter.value = req.body.data.body[model_table].pat_nat_id;
+    } else if (reqBody.data.filter.column === '') {
         res.status(400);
         res.json(`No filter data available, please select which enteries to delete!`);
     } else {
-        const proceed = await isPresentInDB(req.params.tableName, req.body.data.filter.column, req.body.data.filter.value);
+        const proceed = await isPresentInDB(req.params.tableName, reqBody.data.filter.column, reqBody.data.filter.value);
         if (proceed) {
             try {
-                const data = await modelsFunctions.deleteEntry(req.params.tableName, req.body);
+                const data = await modelsFunctions.deleteEntry(req.params.tableName, reqBody);
                 res.status(200);
                 res.json(data);
             } catch (error) {
@@ -181,16 +186,29 @@ async function deleteEntry(req: express.Request, res: express.Response): Promise
 // to be used only while creating new user from scratch or registering multiple tables at once
 async function registerNewPatientEntries(req: express.Request, res: express.Response): Promise<void> {
     try {
-        await modelsFunctions.createNewUser(req.body);
-        res.status(200);
-        res.json(`Registered new patient successfully`);
+        const reqBody = req.body as clinicTypes.REQBODY
+        const pat_nat_id = reqBody.data.body.patients_personal?.pat_nat_id || ''
+        if (pat_nat_id === '') {
+            res.status(400)
+            res.json(`Please provide patients's national id`)
+        } else {
+            const proceed = ! await isPresentInDB('patients_personal', 'pat_nat_id', pat_nat_id);
+            if (!proceed) {
+                res.status(400)
+                res.json(`This patient is already registered, please go to edit patient instead`)
+            } else {
+                await modelsFunctions.createNewUser(reqBody);
+                res.status(200);
+                res.json(`Registered new patient successfully`);
+            }
+        }
     } catch (error) {
         throw new Error(`Can't register patient: Handler Level : ${error}`);
     }
 }
 
 
-main_routes.post('/:tableName/registeroneentry', verifyToken, registerNew);
+main_routes.post('/:tableName/registeroneentry', registerNew);
 main_routes.patch('/:tableName/showone', verifyToken, showEntry);
 main_routes.patch('/:tableName/showall', verifyToken, showAll);
 main_routes.put('/:tableName/update', verifyToken, update);

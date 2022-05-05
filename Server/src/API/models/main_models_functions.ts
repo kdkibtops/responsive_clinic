@@ -121,9 +121,9 @@ export async function deleteEntry(tableName: string, reqBody: clinicTypes.REQBOD
 
 //Debugged
 // to be used only while creating new user from scratch
-export async function createNewUser(req: clinicTypes.REQBODY) {
+export async function createNewUser(reqBody: clinicTypes.REQBODY) {
     try {
-        const SQLarr = clinicTypes.iterateThroughReqBody(req);
+        const SQLarr = clinicTypes.iterateThroughReqBody(reqBody);
         const conn = await client.connect();
         for (let i = 0; i < SQLarr.length; i++) {
             const result = await conn.query(SQLarr[i]);

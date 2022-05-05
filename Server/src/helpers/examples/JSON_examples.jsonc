@@ -197,6 +197,232 @@
                 "value": "28912142102773"
             }
         }
+    },
+    "req.bodyToProxy": {
+        "method": "PATCH",
+        "toDo": "indexUsers",
+        "body": {
+            "data": {
+                "user": {
+                    "username": "kdkibtops",
+                    "password": "123"
+                },
+                "body": {
+                    "users": {
+                        "username": "kdkibtops",
+                        "password": "123"
+                    }
+                }
+            }
+        }
+    },
+    "isAFinal": {
+        "method": "PATCH",
+        "toDo": "showPatients",
+        "body": {
+            "data": {
+                "user": {
+                    "req_username": "requesting_username", //Required
+                    "username": "username_for_authentication", //optional
+                    "password": "password_for_authentication", //optional
+                    "req_JWT": "request_JWT" //optional
+                },
+                "SQL": {},
+                "filter": {
+                    "column": "column", //Required
+                    "value": "value" //Required
+                },
+                "body": {
+                    "patients_personal": {
+                        "pat_nat_id": ""
+                    }
+                }
+            }
+        }
+    },
+    "fdf": {
+        "method": "POST",
+        "toDo": "registerPatient",
+        "body": {
+            "data": {
+                "body": {
+                    "patients_personal": {
+                        "firstname": "dop",
+                        "middlename": "Mohammad",
+                        "lastname": "Zidan",
+                        "pat_nat_id": "28612142102773",
+                        "dob": "04-14-1960",
+                        "residence": "Cairo",
+                        "gender": "male",
+                        "mobile": "01002651857;01113579900;0233355858",
+                        "hospital_id": "1_985332",
+                        "rank": "Civilian",
+                        "firstvisit": "10-18-2021",
+                        "lastvisit": "04-20-2022"
+                    },
+                    "cbc": {
+                        "pat_id": "1_985332",
+                        "pat_nat_id": "26004142102773",
+                        "date": "10-8-2021",
+                        "lab": "cbc",
+                        "hb": 13.5,
+                        "platelets": 180000,
+                        "tlc": 7000,
+                        "inr": 1.2
+                    },
+                    "chemistry": {
+                        "pat_id": "1_985332",
+                        "pat_nat_id": "26004142102773",
+                        "date": "10-9-2021",
+                        "lab": "chemistry",
+                        "ast": 56,
+                        "alt": 54,
+                        "albumin": 4.5,
+                        "bilirubin_direct": 2,
+                        "bilirubin_total": 3,
+                        "s_creat": 1.2,
+                        "urea": 56,
+                        "potassium": 3.4,
+                        "sodium": 48
+                    },
+                    "clinical_data": {
+                        "pat_id": "1_985332",
+                        "pat_nat_id": "26004142102773",
+                        "dm": "controlled",
+                        "htn": "No",
+                        "hcv": "hcv",
+                        "hbv": "hbv",
+                        "hiv": "hiv",
+                        "child_pugh": "A",
+                        "hcv_virology": "hcvVi",
+                        "hbv_virology": "hbvVi",
+                        "hiv_virology": "hivVi",
+                        "ckd": "yes",
+                        "disability": "no",
+                        "cardiac": "cardiac"
+                    },
+                    "clinics": {
+                        "date": "10-9-2021",
+                        "attending_phys": "5"
+                    },
+                    "ct": {
+                        "pat_id": "1_985332",
+                        "pat_nat_id": "26004142102773",
+                        "date": "10-9-2021",
+                        "center": "CT",
+                        "radiologist": "CT_reporter",
+                        "hfl_lobe": "Lt",
+                        "hfl_number": "1",
+                        "hfl_segment": "2",
+                        "size": 4.5,
+                        "aphe": "APHE",
+                        "washout": "washout",
+                        "capsule": "capsule",
+                        "growth": "growth",
+                        "lipidol": "lipidol",
+                        "mpv": "mpv",
+                        "rpv": "rpv",
+                        "lpv": "lpv",
+                        "ascites": "ascites",
+                        "cirrhosis": "cirrhosis",
+                        "ha_origin": "coeiliac"
+                    },
+                    "mri": {
+                        "pat_id": "1_985332",
+                        "pat_nat_id": "26004142102773",
+                        "date": "10-9-2021",
+                        "center": "mri",
+                        "radiologist": "mri_reporter",
+                        "hfl_lobe": "Lt",
+                        "hfl_number": "1",
+                        "hfl_segment": "2",
+                        "size": 4.5,
+                        "aphe": "APHE",
+                        "washout": "washout",
+                        "capsule": "capsule",
+                        "growth": "growth",
+                        "diffusion": "diffusion",
+                        "mpv": "mpv",
+                        "rpv": "rpv",
+                        "lpv": "lpv",
+                        "ascites": "ascites",
+                        "cirrhosis": "cirrhosis",
+                        "ha_origin": "coeiliac"
+                    },
+                    "ultrasound": {
+                        "pat_id": "1_985332",
+                        "pat_nat_id": "26004142102773",
+                        "date": "10-9-2021",
+                        "center": "CT",
+                        "radiologist": "CT_reporter",
+                        "hfl_lobe": "Lt",
+                        "hfl_number": "1",
+                        "hfl_segment": "2",
+                        "mpv": "mpv",
+                        "rpv": "rpv",
+                        "lpv": "lpv",
+                        "ascites": "ascites",
+                        "cirrhosis": "cirrhosis"
+                    },
+                    "patient_plan": {
+                        "pat_id": "1_985332",
+                        "pat_nat_id": "26004142102773",
+                        "date": "10-9-2021",
+                        "radiologist": "PlanningRadiologist",
+                        "plan_setting": "outpatient",
+                        "decision": "waiting",
+                        "further": "update investigations; update imaging; check further",
+                        "remarks": "Remarks section"
+                    },
+                    "patients_visits": {
+                        "pat_id": "1_985332",
+                        "pat_nat_id": "26004142102773",
+                        "clinic_id": "3"
+                    },
+                    "resection": {
+                        "pat_id": "1_985332",
+                        "pat_nat_id": "26004142102773",
+                        "center": "resectionCent",
+                        "transplant": "transplant"
+                    },
+                    "rfa": {
+                        "pat_id": "1_985332",
+                        "pat_nat_id": "26004142102773",
+                        "radiologist": "rfa radiologist"
+                    },
+                    "tace": {
+                        "parent_feeding_artery": "SMA",
+                        "radiologist": "tace radiologist",
+                        "pat_id": "1_985332",
+                        "pat_nat_id": "26004142102773"
+                    },
+                    "tumor_markers": {
+                        "lab": "tumoMark",
+                        "date": "10-9-2021",
+                        "pat_id": "1_985332",
+                        "pat_nat_id": "26004142102773"
+                    },
+                    "virology": {
+                        "pat_id": "1_985332",
+                        "pat_nat_id": "26004142102773",
+                        "date": "10-9-2021",
+                        "lab": "virology",
+                        "hbv": "negative"
+                    }
+                }
+            },
+            "filter": {
+                "column": "",
+                "value": ""
+            },
+            "SQL": {},
+            "user": {
+                "req_username": "kdkibtops",
+                "username": "kdkibtops",
+                "password": "123",
+                "req_JWT": ""
+            }
+        }
     }
     //below curly bracket not included
 }

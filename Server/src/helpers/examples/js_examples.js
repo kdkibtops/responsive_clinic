@@ -41,3 +41,19 @@ const reqBodyOthers = {
         }
     }
 }
+
+const reqBodyToProxy = {
+    method: "PATCH",
+    toDo: "indexUsers",
+    body: {
+        data: {
+            user: {
+                username: "kdkibtops",
+                password: "123"
+            },
+            body: {
+
+            }
+        }
+    }
+}

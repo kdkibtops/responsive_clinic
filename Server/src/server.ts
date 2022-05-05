@@ -26,4 +26,3 @@ clinicApp.use(express.static(path.join(__dirname, '../../../Front_end/src/', 'my
 clinicApp.use('/users', users_routes);
 clinicApp.use('/main', main_routes);
 clinicApp.use('/complex', complex_routes);
-

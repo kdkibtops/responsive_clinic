@@ -67,6 +67,10 @@ export function createSQLshowAll(tableName: string, columnsNeeded: string[], fil
             columns += ',';
         });
         columns = columns.slice(0, -1);
+        // if no columns needed provided, by default it will return everything *
+        if (columnsNeeded.length === 0) {
+            columns += '*'
+        }
         SQL = `SELECT ${columns} FROM ${tableName}`;
 
     }

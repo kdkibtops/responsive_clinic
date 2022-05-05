@@ -219,12 +219,15 @@ export type PATIENTS_VISITS = {
 export type REQDATAFILTER = {
     column: string,
     value: string,
+    columnsNeeded?: string[],
     orderBy?: string,
     clinicID?: string
 }
 export type REQDATAUSER = {
     req_username: string,
-    req_JWT: string
+    username?: string,
+    req_JWT?: string,
+    password?: string,
 }
 export type REQBODY = {
     data: {
@@ -248,7 +251,7 @@ export type REQBODY = {
             ct?: CT,
             virology?: VIROLOGY,
             users?: USERS,
-            updating_user?: UPDATING_USER
+            updating_user?: UPDATING_USER,
         },
         SQL: SQLquery
     }
@@ -374,6 +377,17 @@ export function iterateThroughReqBody(reqBody: REQBODY): string[] {
         SQLarr.push(SQL)
     }
     return SQLarr;
+}
+
+export type newProxyServerClient = {
+    name: string,
+    status: boolean
+}
+
+export type HTMLReq = {
+    method: string,
+    toDo: string,
+    body: REQBODY
 }
 
 

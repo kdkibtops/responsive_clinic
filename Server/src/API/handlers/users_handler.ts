@@ -11,7 +11,8 @@ const users_routes = express.Router();
 // JWT can be stored in localstorage or cookie for further sign in
 async function authentication(req: express.Request, res: express.Response) {
     try {
-        const JWT = await authenticateUser(req.body.data, res);
+        const JWT = await authenticateUser(req.body as clinicTypes.REQBODY, res);
+        res.status(200);
         res.json(JWT);
     } catch (error) {
         throw new Error(`Authentication error`)
@@ -19,7 +20,6 @@ async function authentication(req: express.Request, res: express.Response) {
 }
 async function indexNotVerify(req: express.Request, res: express.Response): Promise<void> {
     try {
-
         const users__ = await _user_.indexAllUsers();
         res.status(200);
         res.json(users__);
@@ -30,11 +30,13 @@ async function indexNotVerify(req: express.Request, res: express.Response): Prom
 }
 async function index(req: express.Request, res: express.Response): Promise<void> {
     try {
-        const user_data = await getDataFromToken(req, res);
+        const reqBody = req.body as clinicTypes.REQBODY
+        const user_data = await getDataFromToken(req);
         const verification = await verifyUser(user_data.username, '', 'admin');
+        console.log(`Verification: ${verification}`);
         if (verification === null) {
             res.status(404);
-            res.json(`Verification failed, Username ${req.body.username} is not found in database`);
+            res.json(`Verification failed, Username ${reqBody.data.user.username} is not found in database`);
         } else if (verification === true) {
             const users__ = await _user_.indexAllUsers();
             res.status(200);
@@ -49,6 +51,7 @@ async function index(req: express.Request, res: express.Response): Promise<void>
 }
 async function showUser(req: express.Request, res: express.Response): Promise<void> {
     try {
+
         const verification = await verifyUser(req.params.username);
         if (verification === null) {
             res.status(404);
@@ -65,14 +68,15 @@ async function showUser(req: express.Request, res: express.Response): Promise<vo
 }
 async function createUser(req: express.Request, res: express.Response): Promise<void> {
     try {
-        const password_digest = passwordHashing(req.body.data.body.password as string);
+        const reqBody = req.body as clinicTypes.REQBODY
+        const password_digest = passwordHashing(reqBody.data.body.users?.password as string);
         const newUser: User = {
-            fullname: req.body.data.body.fullname,
-            username: req.body.data.body.username,
+            fullname: reqBody.data.body.users?.fullname as string,
+            username: reqBody.data.body.users?.password as string,
             password: password_digest,
-            role: req.body.data.body.role,
-            degree: req.body.data.body.degree,
-            email: req.body.data.body.email
+            role: reqBody.data.body.users?.role as string,
+            degree: reqBody.data.body.users?.degree as string,
+            email: reqBody.data.body.users?.email as string
         }
         const users__ = await _user_.createNewUser(newUser);
         res.json(users__);
@@ -87,7 +91,7 @@ async function deleteUser(req: express.Request, res: express.Response): Promise<
         if (verification === null) {
             res.json(`Verification failed, Username ${reqBody.data.user.req_username} is not found in database`);
         } else if (verification === true) {
-            const users__ = await _user_.deleteUser(reqBody.data.body.users!.username || 'nothingToDelete');
+            const users__ = await _user_.deleteUser(reqBody.data.body.users?.username || 'nothingToDelete');
             res.json(users__);
         } else if (verification === false) {
             res.json(`User verification failed`);
@@ -125,7 +129,7 @@ const welcome = async (
     res: express.Response
 ): Promise<void> => {
     try {
-        res.send('Welcome to the users section');
+        res.json('Welcome to the users section');
     } catch (error) {
         throw new Error(`Can't welcome`);
     }

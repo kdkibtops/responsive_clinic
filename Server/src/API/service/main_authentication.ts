@@ -4,6 +4,7 @@ import { NextFunction, Request, Response } from 'express';
 import { User } from '../models/users';
 import client from '../../database';
 import { getCertainDataFromUser } from '../../helpers/helper_functions';
+import { REQBODY } from '../../config/clinicTypes';
 
 const pepper: string = process.env.BCRYPT_PASSWORD as string;
 const saltRounds: number = parseInt(process.env.SALT_ROUNDS as string);
@@ -49,12 +50,13 @@ export async function authenticate(
 
 //Check if user is authenticated, supply JWT to response body to be pass to req.header later on
 export const authenticateUser = async (
-    req: Request,
+    req: REQBODY,
     res: Response
 ): Promise<string | null> => {
-    const user_name: string = req.body.username as string;
-    const password: string = req.body.password as string;
+    const user_name: string = req.data.user.username as string;
+    const password: string = req.data.user.password as string;
     const authenticated = await authenticate(user_name, password);
+    console.log(`'${user_name}' authenticated: ${authenticated}`);
     if (authenticated === true) {
         const BEARER_JWT = await createToken(user_name, res);
         res.status(200);
@@ -112,13 +114,13 @@ export const verifyToken = async (
             if (user_data) {
                 next();
             } else {
-                res.send('Token verification error');
+                res.json('Token verification error');
             }
         } else {
-            res.send(`Error: Token is not provided with your request`);
+            res.json(`Error: Token is not provided with your request`);
         }
     } catch (error) {
-        res.send(`Eroor: ${error}`);
+        res.json(`Error: ${error}`);
     }
 };
 
@@ -198,17 +200,38 @@ export async function verifyUser(
 
 export const getDataFromToken = async (
     req: Request,
-    res: Response,
 ): Promise<User> => {
     try {
         const authHeader = req.headers.authorization as string;
         const token = authHeader.split(' ')[1];
         const user_data: User = jwt.verify(token, secret) as User;
         return user_data;
-
     } catch (error) {
-        res.send(`Eroor: ${error}`);
+        console.log(`Get data from token failed: ${req.headers.authorization}`)
         throw new Error(`${error}`);
     }
 };
 
+
+
+export const proxyVerifyToken = async (
+    req: Request
+): Promise<boolean | null> => {
+    try {
+        const authHeader = req.headers.authorization as string;
+        let token: string;
+        if (authHeader) {
+            token = authHeader.split(' ')[1];
+            const user_data: User = jwt.verify(token, secret) as User;
+            if (user_data) {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return false
+        }
+    } catch (error) {
+        return false;
+    }
+};

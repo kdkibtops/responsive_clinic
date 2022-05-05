@@ -1,4 +1,5 @@
 import { json } from "body-parser";
+import * as clinicalTypes from '../config/clinicTypes';
 
 const newClinicalData = {
     id: '111',
@@ -90,6 +91,56 @@ console.log(DOB)
 
 */
 
-const arr = ['a', 'b', 'c'];
+type newClient = {
+    name: string,
+    status: string
+}
 
-console.log(arr.indexOf('a'));
+const arr: newClient[] = [];
+const x: newClient = {
+    name: '127.0.0.1',
+    status: 'yes'
+}
+const y: newClient = {
+    name: '135.0.0.1',
+    status: 'yes'
+}
+const z: newClient = {
+    name: '134.0.0.1',
+    status: 'yes'
+}
+arr.push(x, y, z);
+arr.forEach(ele => {
+    if (ele.name === '134.0.0.1') {
+        console.log(ele.name);
+    } else {
+        console.log(false);
+    }
+})
+
+// console.log(arr);
+
+const u: clinicalTypes.HTMLReq = {
+    method: 'PATCH',
+    toDo: 'showPatients',
+    body: {
+        data: {
+            user: { req_username: 'req_username', username: 'username', password: 'password' },
+            SQL: {},
+            filter: { column: 'column', value: 'value' },
+            body: {
+                patients_personal: {
+
+                }
+            }
+        }
+    }
+}
+
+const g = {
+    body: {
+        r: 'yes'
+    }
+}
+const o = 'r';
+console.log(g.body[o]);

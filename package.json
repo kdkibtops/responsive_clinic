@@ -6,7 +6,8 @@
     "scripts": {
         "start": "node dist/server/server.js",
         "prettier": "prettier --config .prettierrc src////*.ts --write",
-        "watch": "tsc-watch --esModuleInTerop server/src/server.ts --outDir ./server/dist/server --onSuccess \"node ./server/dist/server/server.js\"",
+        "watch": "tsc-watch --esModuleInTerop server/src/server.ts --outDir ./server/dist/server --onSuccess \"node ./server/dist/server/server.js\" ",
+        "proxyWatch": "tsc-watch --esModuleInTerop server/src/proxyServer.ts --outDir ./server/dist/proxyServer --onSuccess \"node ./server/dist/proxyServer/proxyServer.js\" ",
         "build": "npx tsc",
         "gitpush": "git add . && git commit && git status && git push"
     },
@@ -28,6 +29,7 @@
         "@types/express": "^4.17.13",
         "@types/jsonwebtoken": "^8.5.8",
         "@types/node": "^17.0.25",
+        "@types/node-fetch": "^2.6.1",
         "@types/pg": "^8.6.5",
         "ts-node": "^10.7.0",
         "tsc-watch": "^5.0.3",
@@ -41,6 +43,7 @@
         "dotenv": "^16.0.0",
         "express": "^4.17.3",
         "jsonwebtoken": "^8.5.1",
+        "node-fetch": "^2.6.1",
         "pg": "^8.7.3"
     }
 }

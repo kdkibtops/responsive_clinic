@@ -10,5 +10,6 @@ export const setupData = {
     DB_port: Number(process.env.DB_PORT),
     server_port: Number(process.env.SERVER_PORT),
     hashPassword: process.env.BCRYPT_PASSWORD,
-    JWT_secret: process.env.TOKEN_SECRET
+    JWT_secret: process.env.TOKEN_SECRET,
+    proxyPort: Number(process.env.PROXY_PORT)
 }
