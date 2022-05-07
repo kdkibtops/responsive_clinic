@@ -31,7 +31,30 @@ async function routingFunction(req: express.Request, res: express.Response) {
                 auth_verified = true;
                 JWT = req.headers.authorization as string
             } else {
+                // if user is signed in but JWT was not provided, try authentication again
                 auth_verified = false;
+                const authRequest = creatAuth_HTMLRequest(req);
+                const result = await newFetch(authRequest, '');
+                if (result.status === 404 || result.status === 401) {
+                    authenticated = false;
+                    const x: clinicTypes.newProxyServerClient = {
+                        name: req.hostname,
+                        status: authenticated
+                    }
+                    clients.push(x);
+                    auth_verified = authenticated
+                } else if (result.status === 200) {
+                    authenticated = true;
+                    const x: clinicTypes.newProxyServerClient = {
+                        name: req.hostname,
+                        status: authenticated
+                    }
+                    auth_verified = authenticated
+                    clients.push(x);
+                    JWT = `BEARER ` + result.response;
+                } else {
+                    auth_verified = false;
+                }
             }
         } else {
             // if client was not found in clients array, it will authenticate and put in array
