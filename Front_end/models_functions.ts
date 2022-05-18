@@ -1,6 +1,6 @@
 // This module will be used to replace all models, instead we will pass the table name and request from the handler directly
-import * as SQLqueries from './createSQLString';
-import client from "../database";
+import * as SQLqueries from '../Server/src/helpers/createSQLString';
+import client from "../Server/src/database";
 import exrpess from 'express';
 import { Patient } from "../API/models/patients";
 import { Clinic } from "../API/models/clinics";

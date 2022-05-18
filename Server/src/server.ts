@@ -7,6 +7,7 @@ import { testDB } from './database'
 import main_routes from "./API/handlers/main_handler";
 import path from 'path';
 import complex_routes from "./API/handlers/complex_handler";
+import { printHeaders } from './API/service/main_authentication' //MiddleWare to be used only for debugging
 
 console.log('started');
 const clinicApp = express();
@@ -22,7 +23,8 @@ function startServer() {
 }
 testDB();
 
+
 clinicApp.use(express.static(path.join(__dirname, '../../../Front_end/src/', 'myWebSite')));
-clinicApp.use('/users', users_routes);
-clinicApp.use('/main', main_routes);
-clinicApp.use('/complex', complex_routes);
+clinicApp.use('/users', /*printHeaders,*/ users_routes);
+clinicApp.use('/main', /*printHeaders, */ main_routes);
+clinicApp.use('/complex',/* printHeaders, */ complex_routes);

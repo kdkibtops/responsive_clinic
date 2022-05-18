@@ -235,3 +235,18 @@ export const proxyVerifyToken = async (
         return false;
     }
 };
+
+// Middleware to be used only for debugging
+export const printHeaders = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+): Promise<void> => {
+    try {
+        console.log(req.headers);
+        next();
+    }
+    catch (error) {
+        res.json(`Error: ${error}`);
+    }
+};

@@ -4,12 +4,14 @@ import express from 'express';
 import * as clinicTypes from './config/clinicTypes';
 import fetch from 'node-fetch';
 import { setupData } from './config/config';
-import { proxyVerifyToken, verifyToken } from "./API/service/main_authentication";
+import { proxyVerifyToken, verifyToken, printHeaders } from "./API/service/main_authentication";
 
 const proxyServer = express();
 proxyServer.use(bodyParser.urlencoded({ extended: false }));
 proxyServer.use(bodyParser.json());
-proxyServer.use(cors());
+const corsOptions: cors.CorsOptions = { allowedHeaders: 'Credentials' };
+proxyServer.use(cors(corsOptions)); //allowed origin any
+
 const proxyPort = setupData.proxyPort;
 proxyServer.listen(proxyPort, startProxyServer)
 function startProxyServer() {
@@ -205,5 +207,4 @@ function creatHTML_Request(req: express.Request): clinicTypes.HTMLReq {
     return newRequest
 }
 
-
-proxyServer.post('/proxy', routingFunction);
+proxyServer.post('/proxy',/* printHeaders,*/ routingFunction);

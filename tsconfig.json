@@ -66,5 +66,6 @@
   },
   "exclude": [
     "node_modules",
+    "front_end"
   ]
 }
